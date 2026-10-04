@@ -86,3 +86,39 @@
 
   mobile.addEventListener('change', () => setMenu(false));
 })();
+
+/* =========================================================
+   ENQUIRY FORM: opens WhatsApp with the filled-in details
+   ========================================================= */
+(() => {
+  const form = document.querySelector('[data-enquiry]');
+  if (!form) return;
+  const error = form.querySelector('.enquiry__error');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    const missing = ['name', 'phone', 'message'].filter((k) => !data[k].trim());
+    form.querySelectorAll('input, textarea').forEach((el) => {
+      el.toggleAttribute('aria-invalid', missing.includes(el.name));
+    });
+    if (missing.length) {
+      error.hidden = false;
+      form.querySelector(`[name="${missing[0]}"]`).focus();
+      return;
+    }
+    error.hidden = true;
+
+    const text = [
+      'New enquiry from idmapharma.com',
+      `Name: ${data.name.trim()}`,
+      `Phone: ${data.phone.trim()}`,
+      data.city.trim() && `City: ${data.city.trim()}`,
+      `I am a: ${data.type}`,
+      `Requirement: ${data.message.trim()}`,
+    ].filter(Boolean).join('\n');
+    window.open(`https://wa.me/916387878493?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  });
+})();
+
+document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
