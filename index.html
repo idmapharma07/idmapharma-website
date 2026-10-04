@@ -48,7 +48,7 @@
       <nav class="nav" id="site-nav" aria-label="Main" data-nav>
         <ul class="nav__list">
           <li class="nav__item"><a class="nav__link" href="/" aria-current="page">Home</a></li>
-          <li class="nav__item"><a class="nav__link" href="/what-we-do">What We Do</a></li>
+          <li class="nav__item"><a class="nav__link" href="#about">What We Do</a></li>
           <li class="nav__item nav__item--dropdown">
             <button class="nav__link" type="button" aria-expanded="false" aria-controls="products-menu" data-dropdown-toggle>
               Product Range
@@ -59,22 +59,22 @@
                 <div class="dropdown__group">
                   <p class="dropdown__heading">By dosage form</p>
                   <ul class="dropdown__grid">
-                    <li><a class="dropdown__link" href="/product-range#tablets"><span class="dropdown__title">Tablets</span><span class="dropdown__desc">Film-coated, chewable, mouth-dissolving &amp; dispersible</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#capsules"><span class="dropdown__title">Capsules</span><span class="dropdown__desc">Hard gelatin, wide range of sizes</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#syrups"><span class="dropdown__title">Syrups &amp; Dry Syrups</span><span class="dropdown__desc">PET, HDPE &amp; amber glass bottles</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#creams"><span class="dropdown__title">Creams</span><span class="dropdown__desc">Antibiotic, antifungal &amp; anti-pruritic</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#nutrition"><span class="dropdown__title">Protein Powders &amp; Energy Drinks</span><span class="dropdown__desc">Powder-form nutrition range</span></a></li>
+                    <li><a class="dropdown__link" href="#tablets"><span class="dropdown__title">Tablets</span><span class="dropdown__desc">Film-coated, chewable, mouth-dissolving &amp; dispersible</span></a></li>
+                    <li><a class="dropdown__link" href="#capsules"><span class="dropdown__title">Capsules</span><span class="dropdown__desc">Hard gelatin, wide range of sizes</span></a></li>
+                    <li><a class="dropdown__link" href="#syrups"><span class="dropdown__title">Syrups &amp; Dry Syrups</span><span class="dropdown__desc">PET, HDPE &amp; amber glass bottles</span></a></li>
+                    <li><a class="dropdown__link" href="#creams"><span class="dropdown__title">Creams</span><span class="dropdown__desc">Antibiotic, antifungal &amp; anti-pruritic</span></a></li>
+                    <li><a class="dropdown__link" href="#nutrition"><span class="dropdown__title">Protein Powders &amp; Energy Drinks</span><span class="dropdown__desc">Powder-form nutrition range</span></a></li>
                   </ul>
                 </div>
                 <div class="dropdown__group dropdown__group--segments">
                   <p class="dropdown__heading">By segment</p>
                   <ul class="dropdown__grid">
-                    <li><a class="dropdown__link" href="/product-range#general"><span class="dropdown__title">General &amp; Antibiotics</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#gastro"><span class="dropdown__title">Gastro</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#gynae"><span class="dropdown__title">Gynae &amp; Infertility</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#pediatric"><span class="dropdown__title">Pediatric</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#derma"><span class="dropdown__title">Derma &amp; Skin Care</span></a></li>
-                    <li><a class="dropdown__link" href="/product-range#dental"><span class="dropdown__title">Dental</span></a></li>
+                    <li><a class="dropdown__link" href="#products"><span class="dropdown__title">General &amp; Antibiotics</span></a></li>
+                    <li><a class="dropdown__link" href="#products"><span class="dropdown__title">Gastro</span></a></li>
+                    <li><a class="dropdown__link" href="#products"><span class="dropdown__title">Gynae &amp; Infertility</span></a></li>
+                    <li><a class="dropdown__link" href="#products"><span class="dropdown__title">Pediatric</span></a></li>
+                    <li><a class="dropdown__link" href="#products"><span class="dropdown__title">Derma &amp; Skin Care</span></a></li>
+                    <li><a class="dropdown__link" href="#products"><span class="dropdown__title">Dental</span></a></li>
                   </ul>
                 </div>
               </div>
@@ -124,7 +124,7 @@
           <p class="hero__lead">High-quality, affordable and accessible medicines: tablets, capsules, syrups, creams and nutrition products, manufactured under strict quality standards for healthcare professionals, distributors and partners.</p>
 
           <div class="hero__actions">
-            <a class="btn btn--primary btn--lg" href="/product-range">
+            <a class="btn btn--primary btn--lg" href="#products">
               Explore Product Range
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
@@ -189,7 +189,7 @@
             </div>
           </figure>
 
-          <a class="link-arrow" href="/what-we-do">Learn what we do <span aria-hidden="true">&rarr;</span></a>
+          <a class="link-arrow" href="#about">Learn what we do <span aria-hidden="true">&rarr;</span></a>
         </div>
 
         <div class="about__meaning">
@@ -206,8 +206,65 @@
     </section>
     <!-- ====================== ABOUT END ======================= -->
 
+    <!-- ================= PRODUCT RANGE START ================== -->
+    <section class="section range" id="products">
+      <div class="container">
+        <div class="range__head">
+          <div>
+            <p class="section__eyebrow">Product range</p>
+            <h2 class="section__title">A wide range of products under one roof</h2>
+          </div>
+          <p class="range__intro">General (allopathic) and derma ranges across every major dosage form, made with modern technology and strict in-house processes.</p>
+        </div>
+
+        <ul class="range__grid">
+          <li class="range-card" id="tablets">
+            <svg class="range-card__icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15" fill="#ffe0e1"/><circle cx="24" cy="24" r="15" fill="none" stroke="#c8102e" stroke-width="2.5"/><path d="M13 24h22" stroke="#c8102e" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <h3>Tablets</h3>
+            <p>Film-coated, uncoated, chewable, mouth-dissolving and dispersible tablets, in beta-lactam and non-beta-lactam ranges.</p>
+            <a class="range-card__link" href="https://wa.me/916387878493?text=Tablets%20enquiry" target="_blank" rel="noopener">Enquire <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="range-card" id="capsules">
+            <svg class="range-card__icon" viewBox="0 0 48 48" aria-hidden="true"><g transform="rotate(-40 24 24)"><path d="M24 14h-7a10 10 0 0 0 0 20h7z" fill="#c8102e"/><path d="M24 14h7a10 10 0 0 1 0 20h-7z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5"/></g></svg>
+            <h3>Capsules</h3>
+            <p>Hard gelatin capsules filled and processed across a wide range of sizes and product profiles.</p>
+            <a class="range-card__link" href="https://wa.me/916387878493?text=Capsules%20enquiry" target="_blank" rel="noopener">Enquire <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="range-card" id="syrups">
+            <svg class="range-card__icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="19" y="6" width="10" height="6" rx="1.5" fill="#c8102e"/><path d="M17 14h14v4l3 4v18a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V22l3-4z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 30h20v10a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3z" fill="#f07c13" opacity=".85"/></svg>
+            <h3>Syrups &amp; Dry Syrups</h3>
+            <p>Antibiotics, analgesics, multivitamins and antihistamines in PET, HDPE and amber glass bottles, with droppers and measuring caps.</p>
+            <a class="range-card__link" href="https://wa.me/916387878493?text=Syrups%20and%20Dry%20Syrups%20enquiry" target="_blank" rel="noopener">Enquire <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="range-card" id="creams">
+            <svg class="range-card__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 14h24l-3 24a4 4 0 0 1-4 3.5H19A4 4 0 0 1 15 38z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/><rect x="18" y="6" width="12" height="8" rx="2" fill="#c8102e"/></svg>
+            <h3>Creams</h3>
+            <p>Antibiotic, antifungal, anti-inflammatory and anti-pruritic creams for skin and derma care.</p>
+            <a class="range-card__link" href="https://wa.me/916387878493?text=Creams%20enquiry" target="_blank" rel="noopener">Enquire <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="range-card" id="nutrition">
+            <svg class="range-card__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 12h20l-2 28a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/><rect x="12" y="7" width="24" height="6" rx="2" fill="#c8102e"/><path d="M26 19l-5 8h6l-5 8" fill="none" stroke="#f07c13" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Protein Powders &amp; Energy Drinks</h3>
+            <p>Nutrition range in powder form, including protein powders and energy drinks.</p>
+            <a class="range-card__link" href="https://wa.me/916387878493?text=Protein%20Powders%20and%20Energy%20Drinks%20enquiry" target="_blank" rel="noopener">Enquire <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="range-card range-card--cta">
+            <h3>Need a specific molecule?</h3>
+            <p>Send us your requirement and our team will share availability and rates.</p>
+            <a class="btn btn--primary" href="https://wa.me/916387878493?text=Product%20requirement" target="_blank" rel="noopener">Send requirement</a>
+          </li>
+        </ul>
+
+        <div class="segments">
+          <p class="segments__label">Segments we cover</p>
+          <ul class="segments__list"><li>General &amp; Antibiotics</li><li>Gastro</li><li>Gynae &amp; Infertility</li><li>Pediatric</li><li>Derma &amp; Skin Care</li><li>Dental</li></ul>
+        </div>
+      </div>
+    </section>
+    <!-- ================== PRODUCT RANGE END =================== -->
+
     <section style="min-height: 40vh; padding: 64px 0; border-top: 1px solid var(--line);">
-      <div class="container"><p style="margin:0;font-weight:700;color:var(--brand-600);">Section 4 &middot; Product Range, coming next</p></div>
+      <div class="container"><p style="margin:0;font-weight:700;color:var(--brand-600);">Section 5 &middot; Contact &amp; footer, coming next</p></div>
     </section>
   </main>
 
