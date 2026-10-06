@@ -22,7 +22,7 @@ module.exports = [
     brand: [['IDCEFPO-200 DT', 'p']],
     pill: 'outline', pillBorder: 'p',
     generic: 'Cefpodoxime Dispersible Tablets 200 mg.',
-    pack: '1 x 10 Tablets',
+    pack: '10 x 10 Tablets',
     colors: { p: '#5B2D84', pDark: '#3D1A5E', pLight: '#7B44AC', a1: '#C5D400', a2: '#8C8C8C', ribbon: '#FFFFFF' },
     comp: {
       head: 'Each uncoated dispersible tablet contains:',
@@ -52,7 +52,7 @@ module.exports = [
     brand: [['IDFLOX', 'navy'], ['-OZ', 'red']],
     pill: 'outline', pillBorder: 'magenta',
     generic: 'Ofloxacin & Ornidazole Tablets',
-    pack: '1 x 10 Tablets',
+    pack: '10 x 10 Tablets',
     colors: { p: '#6F92CA', pDark: '#3F5FA5', pLight: '#94B2E0', a1: '#E4007C', a2: '#2E3192', ribbon: '#FFFFFF', navy: '#2E3192', red: '#E52521', magenta: '#E4007C' },
     comp: {
       head: 'Each film coated tablet contains:',
@@ -75,7 +75,7 @@ module.exports = [
     brand: [['LIVOID-M', 'white']],
     pill: 'solid', pillBorder: 'a1', italic: true,
     generic: 'Levocetirizine Hydrochloride & Montelukast Tablets I.P.',
-    pack: '1 x 10 Tablets',
+    pack: '10 x 10 Tablets',
     colors: { p: '#22A33F', pDark: '#13782B', pLight: '#45C25E', a1: '#E6E000', a2: '#9ACD32', ribbon: '#E6E000', white: '#FFFFFF' },
     comp: {
       head: 'Each film coated tablet contains:',
@@ -98,7 +98,7 @@ module.exports = [
     brand: [['RIDAM', 'navy'], ['-DSR', 'red']],
     pill: 'outline', pillBorder: 'magenta',
     generic: 'Enteric Coated Rabeprazole Sodium & Domperidone (SR) Capsules',
-    pack: '1 x 10 Capsules',
+    pack: '10 x 10 Capsules',
     colors: { p: '#E2202A', pDark: '#A9111A', pLight: '#F2524A', a1: '#E5007E', a2: '#2D2E83', ribbon: '#FFFFFF', navy: '#2D2E83', red: '#E2202A', magenta: '#E5007E' },
     comp: {
       head: 'Each hard gelatin capsule contains:',
@@ -121,7 +121,7 @@ module.exports = [
     brand: [['WOMI-MD', 'p']],
     pill: 'outline', pillBorder: 'p',
     generic: 'Ondansetron Orally Disintegrating Tablets I.P.',
-    pack: '1 x 10 Tablets',
+    pack: '10 x 10 Tablets',
     motif: 'diamonds',
     colors: { p: '#6A3D99', pDark: '#4A2774', pLight: '#8A5BBE', a1: '#FFC20E', a2: '#F7941D', ribbon: '#FFC20E', orchid: '#C455B5' },
     comp: {
