@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDMA Prescription Pad Sample</title>
+<style>
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-var.woff2) format("woff2"); font-weight: 200 800; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-italic-var.woff2) format("woff2"); font-weight: 200 800; font-style: italic; }
+
+  :root {
+    --brand-50:  #fff3f3;
+    --brand-100: #ffe0e1;
+    --brand-600: #c8102e;
+    --brand-700: #a30d25;
+    --brand-800: #7e0a1d;
+    --accent:    #f07c13;
+    --accent-lt: #ffd2a6;
+    --ink-900:   #0c1f33;
+    --ink-700:   #2b3d52;
+    --ink-500:   #5b6b7f;
+    --line:      #d9e1e9;
+    --font: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  }
+
+  @page { size: 148mm 210mm; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #e9edf1; }
+  body { font-family: var(--font); color: var(--ink-700); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .sheet {
+    width: 148mm; height: 210mm; position: relative; overflow: hidden;
+    background: #fff; margin: 10mm auto; box-shadow: 0 2mm 8mm rgb(12 31 51 / .18);
+    page-break-after: always; break-after: page;
+  }
+  .bleedbox { position: absolute; inset: 0; overflow: hidden; background: #fff; }
+  .trim { position: absolute; left: 0; top: 0; width: 148mm; height: 210mm; }
+  @media print {
+    html, body { background: #fff; }
+    .sheet { margin: 0; box-shadow: none; }
+  }
+
+  /* Printer's file: 10 mm slug + 3 mm bleed + crop marks (html.print, set by the render script) */
+  html.print, html.print body { background: #fff; }
+  html.print .sheet { width: 168mm; height: 230mm; margin: 0; box-shadow: none; overflow: visible; }
+  html.print .bleedbox { inset: auto; left: 7mm; top: 7mm; width: 154mm; height: 216mm; }
+  html.print .trim { left: 3mm; top: 3mm; }
+  html.print .cover-top { inset: -3mm -3mm auto -3mm; height: 133mm; }
+  html.print .cover-curve { left: -3mm; width: 154mm; }
+  html.print .contact-band { left: -3mm; right: -3mm; bottom: -3mm; height: 31mm; padding: 0 12mm 3mm; }
+  html.print .list-head .topbar { top: -3mm; left: -3mm; right: -3mm; height: 5.6mm; }
+  html.print .back-band { left: -3mm; right: -3mm; bottom: -3mm; height: 35mm; padding-left: 12mm; padding-right: 12mm; }
+  html.print .back-band .legend { left: 12mm; right: 12mm; bottom: 8mm; }
+  .marks { position: absolute; inset: 0; width: 168mm; height: 230mm; pointer-events: none; }
+  .slug { position: absolute; left: 13mm; top: 2.2mm; font-size: 5pt; color: #000; letter-spacing: .02em; }
+
+  /* ---------- 1. FRONT COVER ---------- */
+  .cover-top {
+    position: absolute; inset: 0 0 auto 0; height: 130mm;
+    background: linear-gradient(160deg, var(--brand-600) 0%, var(--brand-700) 62%, var(--brand-800) 100%);
+  }
+  .cover-curve { position: absolute; left: -1mm; top: 101mm; width: 150mm; height: 30mm; }
+  .cover-logo {
+    position: absolute; top: 13mm; left: 50%; transform: translateX(-50%);
+    background: #fff; border-radius: 30mm; padding: 2.6mm 7mm;
+    box-shadow: 0 1.5mm 4mm rgb(0 0 0 / .18);
+  }
+  .cover-logo img { display: block; width: 40mm; height: auto; }
+  .cover-eyebrow {
+    position: absolute; top: 42mm; width: 100%; text-align: center;
+    color: var(--accent-lt); font-size: 7pt; font-weight: 700; letter-spacing: .32em; text-transform: uppercase;
+  }
+  .cover-title {
+    position: absolute; top: 47.5mm; width: 100%; text-align: center;
+    color: #fff; font-size: 24pt; font-weight: 800; line-height: 1.08; letter-spacing: -.01em;
+  }
+  .cover-title em { font-style: normal; color: var(--accent-lt); }
+  .cover-sub {
+    position: absolute; top: 69mm; left: 16mm; right: 16mm; text-align: center;
+    color: rgb(255 255 255 / .88); font-size: 8.2pt; line-height: 1.45; font-weight: 500;
+  }
+  .acrostic {
+    position: absolute; top: 84mm; left: 9mm; right: 9mm;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4mm;
+  }
+  .acrostic div {
+    background: rgb(255 255 255 / .12); border: .25mm solid rgb(255 255 255 / .28);
+    border-radius: 2.4mm; padding: 2.2mm 1.5mm 2mm; text-align: center; color: #fff;
+  }
+  .acrostic b { display: block; font-size: 17pt; font-weight: 800; line-height: 1; }
+  .acrostic span { display: block; font-size: 7pt; font-weight: 600; margin-top: 1mm; letter-spacing: .02em; }
+
+  .cover-forms-head {
+    position: absolute; top: 132mm; width: 100%; text-align: center;
+    font-size: 7pt; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--brand-600);
+  }
+  .forms {
+    position: absolute; top: 138.5mm; left: 8mm; right: 8mm;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5mm; text-align: center;
+  }
+  .forms svg { width: 11.5mm; height: 11.5mm; display: block; margin: 0 auto 1.2mm; }
+  .forms span { font-size: 6.8pt; font-weight: 700; color: var(--ink-900); line-height: 1.2; display: block; }
+  .segments {
+    position: absolute; top: 159mm; left: 10mm; right: 10mm;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4mm;
+  }
+  .segments span {
+    font-size: 6.6pt; font-weight: 600; color: var(--brand-700);
+    background: var(--brand-50); border: .25mm solid var(--brand-100);
+    border-radius: 5mm; padding: .9mm 2.6mm;
+  }
+  .values {
+    position: absolute; top: 172.5mm; width: 100%; text-align: center;
+    font-size: 6.6pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-500);
+  }
+  .values i { font-style: normal; color: var(--accent); padding: 0 1.2mm; }
+
+  .contact-band {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 28mm;
+    background: var(--ink-900); color: #fff;
+    display: flex; align-items: center; padding: 0 9mm; gap: 4mm;
+  }
+  .contact-band .lines { flex: 1; }
+  .contact-band .row { display: flex; align-items: center; gap: 1.6mm; font-size: 7.4pt; font-weight: 600; line-height: 1.5; }
+  .contact-band .row + .row { margin-top: .6mm; }
+  .contact-band svg { width: 3.2mm; height: 3.2mm; flex: none; }
+  .contact-band .muted { color: rgb(255 255 255 / .72); font-weight: 500; }
+  .contact-band .stripe { position: absolute; top: 0; left: 0; right: 0; height: 1.2mm; background: var(--accent); }
+  .qr { width: 17mm; height: 17mm; background: #fff; border-radius: 1.6mm; padding: 1.4mm; flex: none; }
+  .qr img { width: 100%; height: 100%; display: block; }
+  .qr-cap { font-size: 5.6pt; color: rgb(255 255 255 / .72); text-align: center; margin-top: .8mm; }
+
+  /* ---------- 2 & 4. PRODUCT LIST PAGES ---------- */
+  .list-head {
+    position: relative; height: 25mm; padding: 7.5mm 9mm 0;
+    border-bottom: .35mm solid var(--line);
+  }
+  .list-head .topbar { position: absolute; top: 0; left: 0; right: 0; height: 2.6mm; background: linear-gradient(90deg, var(--brand-600) 0 78%, var(--accent) 78% 100%); }
+  .list-head .eyebrow { font-size: 6.4pt; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--brand-600); }
+  .list-head h2 { font-size: 15pt; font-weight: 800; color: var(--ink-900); line-height: 1.15; margin-top: .8mm; letter-spacing: -.01em; }
+  .list-head img { position: absolute; right: 9mm; top: 8.2mm; width: 21mm; }
+
+  .plist { padding: 1.6mm 9mm 0; }
+  .plist table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .plist col.c-brand { width: 30mm; }
+  .plist col.c-form  { width: 25mm; }
+  .plist th {
+    font-size: 6.2pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-500); text-align: left; padding: 1.4mm 1.4mm 1mm;
+  }
+  .plist th:last-child, .plist td.form { text-align: right; }
+  .plist tr.seg td {
+    background: var(--brand-50); color: var(--brand-700);
+    font-size: 7pt; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    padding: 1.3mm 1.8mm; border-left: .9mm solid var(--brand-600);
+  }
+  .plist td { padding: 1.45mm 1.4mm; vertical-align: top; border-bottom: .2mm solid #edf1f5; }
+  .plist td.brand { font-size: 8.4pt; font-weight: 800; color: var(--brand-600); line-height: 1.25; }
+  .plist td.comp  { font-size: 7.6pt; font-weight: 500; color: var(--ink-900); line-height: 1.32; }
+  .plist td.form  { font-size: 6.8pt; font-weight: 600; color: var(--ink-500); line-height: 1.3; }
+  .plist tr.seg + tr td { padding-top: 1.3mm; }
+
+  .list-foot {
+    position: absolute; left: 9mm; right: 9mm; bottom: 6.5mm;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 4mm;
+    font-size: 5.8pt; color: var(--ink-500); line-height: 1.4;
+  }
+  .list-foot b { color: var(--ink-900); }
+  .list-foot .legend { font-style: italic; max-width: 82mm; }
+  .list-foot .next { font-weight: 700; color: var(--brand-600); white-space: nowrap; }
+
+  .back-band {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 32mm;
+    background: var(--ink-900); color: #fff; padding: 4.6mm 9mm 0;
+    display: flex; gap: 4.5mm;
+  }
+  .back-band .stripe { position: absolute; top: 0; left: 0; right: 0; height: 1.2mm; background: var(--accent); }
+  .back-band .txt { flex: 1; }
+  .back-band .ask { font-size: 9pt; font-weight: 800; line-height: 1.2; }
+  .back-band .ask em { font-style: normal; color: var(--accent-lt); }
+  .back-band .row { display: flex; align-items: center; gap: 1.6mm; font-size: 7.2pt; font-weight: 600; margin-top: 1.1mm; }
+  .back-band .row svg { width: 3.1mm; height: 3.1mm; flex: none; }
+  .back-band .legend { position: absolute; left: 9mm; right: 9mm; bottom: 5mm; font-size: 5.6pt; font-style: italic; color: rgb(255 255 255 / .66); }
+
+  /* ---------- 3. PRESCRIPTION LEAF ---------- */
+  .rx { padding: 0 8mm; }
+  .glue { height: 10mm; }  /* top 10 mm left blank for padding gum / tear-off */
+  .doc { display: flex; justify-content: space-between; gap: 5mm; padding-bottom: 2.4mm; border-bottom: .6mm solid var(--brand-600); position: relative; }
+  .doc::after { content: ""; position: absolute; left: 0; width: 26mm; bottom: -1.4mm; height: .6mm; background: var(--accent); }
+  .doc .name { font-size: 15pt; font-weight: 800; color: var(--brand-600); line-height: 1.1; letter-spacing: -.01em; }
+  .doc .deg  { font-size: 7.8pt; font-weight: 700; color: var(--ink-900); margin-top: .9mm; }
+  .doc .spec { font-size: 7.2pt; font-weight: 500; color: var(--ink-700); margin-top: .4mm; }
+  .doc .reg  { font-size: 7pt; font-weight: 700; color: var(--ink-900); margin-top: .8mm; }
+  .doc .clinic { text-align: right; font-size: 6.9pt; line-height: 1.45; color: var(--ink-700); }
+  .doc .clinic b { display: block; font-size: 8.4pt; font-weight: 800; color: var(--ink-900); }
+  .doc .clinic .t { font-weight: 700; color: var(--ink-900); }
+
+  .pt { display: grid; grid-template-columns: 1fr 22mm 20mm 26mm; gap: 3mm; margin-top: 4.2mm; }
+  .field { font-size: 6.8pt; font-weight: 700; color: var(--ink-900); display: flex; align-items: flex-end; gap: 1.2mm; white-space: nowrap; }
+  .field::after { content: ""; flex: 1; border-bottom: .25mm solid #9aa7b5; height: 3.4mm; }
+  .vit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin-top: 2.6mm; }
+  .vit .field { font-weight: 600; color: var(--ink-700); }
+  .vit .field small { order: 3; font-size: 6pt; color: var(--ink-500); font-weight: 600; }
+
+  .body { display: grid; grid-template-columns: 34mm 1fr; margin-top: 3.4mm; height: 117mm; border-top: .25mm solid var(--line); }
+  .notes { border-right: .25mm solid var(--line); padding: 2.6mm 2.6mm 0 0; display: flex; flex-direction: column; }
+  .notes div { flex: 1; font-size: 6.6pt; font-weight: 700; color: var(--ink-900); letter-spacing: .04em; }
+  .notes div + div { border-top: .25mm dashed var(--line); padding-top: 1.6mm; }
+  .rxarea { position: relative; padding: 1.4mm 0 0 4mm; }
+  .rxarea .sym { font-family: "DejaVu Serif", Georgia, serif; font-size: 26pt; font-weight: 700; color: var(--brand-600); line-height: 1; }
+
+  .closing { display: grid; grid-template-columns: 1fr 40mm; gap: 6mm; margin-top: 1.4mm; border-top: .25mm solid var(--line); padding-top: 2.6mm; }
+  .closing .field + .field { margin-top: 3.4mm; }
+  .sign { align-self: end; text-align: center; font-size: 6.6pt; font-weight: 700; color: var(--ink-900); border-top: .3mm solid var(--ink-700); padding-top: 1mm; }
+  .rx-foot {
+    position: absolute; left: 8mm; right: 8mm; bottom: 5mm;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 5.6pt; color: var(--ink-500); border-top: .25mm solid var(--line); padding-top: 1.4mm;
+  }
+  .rx-foot .court { display: flex; align-items: center; gap: 1.4mm; font-weight: 600; }
+  .rx-foot img { width: 10mm; display: block; }
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     PAGE 1 · FRONT COVER (outside) · 4-colour on 250–300 GSM art card
+     ===================================================================== -->
+<section class="sheet" aria-label="Front cover">
+<div class="bleedbox"><div class="trim">
+  <div class="cover-top"></div>
+  <svg class="cover-curve" viewBox="0 0 148 30" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 12 C36 24 112 24 148 9 V13.2 C112 28.5 36 28.5 0 16 Z" fill="#f07c13"/>
+    <path d="M0 16 C36 28.5 112 28.5 148 13.2 V30 H0 Z" fill="#fff"/>
+  </svg>
+
+  <div class="cover-logo"><img src="idma-logo.png" alt="IDMA Pharma"></div>
+  <p class="cover-eyebrow">IDMA Pharma &middot; Ahmedabad</p>
+  <h1 class="cover-title">Creating &amp; caring<br>for a <em>better life</em></h1>
+  <p class="cover-sub">High-quality, affordable and accessible medicines, manufactured under strict quality standards for healthcare professionals.</p>
+
+  <div class="acrostic">
+    <div><b>I</b><span>Ideal</span></div>
+    <div><b>D</b><span>Dedicated</span></div>
+    <div><b>M</b><span>Morality</span></div>
+    <div><b>A</b><span>Assurance</span></div>
+  </div>
+
+  <p class="cover-forms-head">Five dosage forms under one roof</p>
+  <div class="forms">
+    <div><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="#ffe0e1"/><circle cx="24" cy="24" r="15" fill="none" stroke="#c8102e" stroke-width="2.5"/><path d="M13 24h22" stroke="#c8102e" stroke-width="2.5" stroke-linecap="round"/></svg><span>Tablets</span></div>
+    <div><svg viewBox="0 0 48 48"><g transform="rotate(-40 24 24)"><path d="M24 14h-7a10 10 0 0 0 0 20h7z" fill="#c8102e"/><path d="M24 14h7a10 10 0 0 1 0 20h-7z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5"/></g></svg><span>Capsules</span></div>
+    <div><svg viewBox="0 0 48 48"><rect x="19" y="6" width="10" height="6" rx="1.5" fill="#c8102e"/><path d="M17 14h14v4l3 4v18a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V22l3-4z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 30h20v10a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3z" fill="#f07c13" opacity=".85"/></svg><span>Syrups &amp;<br>Dry Syrups</span></div>
+    <div><svg viewBox="0 0 48 48"><path d="M12 14h24l-3 24a4 4 0 0 1-4 3.5H19A4 4 0 0 1 15 38z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/><rect x="18" y="6" width="12" height="8" rx="2" fill="#c8102e"/></svg><span>Creams</span></div>
+    <div><svg viewBox="0 0 48 48"><path d="M14 12h20l-2 28a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3z" fill="#ffe0e1" stroke="#c8102e" stroke-width="2.5" stroke-linejoin="round"/><rect x="12" y="7" width="24" height="6" rx="2" fill="#c8102e"/><path d="M26 19l-5 8h6l-5 8" fill="none" stroke="#f07c13" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Protein &amp;<br>Energy Drinks</span></div>
+  </div>
+
+  <div class="segments">
+    <span>General &amp; Antibiotics</span><span>Gastro</span><span>Gynae &amp; Infertility</span>
+    <span>Pediatric</span><span>Derma &amp; Skin Care</span><span>Dental</span>
+  </div>
+  <p class="values">Integrity<i>&bull;</i>Quality<i>&bull;</i>Innovation<i>&bull;</i>Reliability</p>
+
+  <div class="contact-band">
+    <div class="stripe"></div>
+    <div class="lines">
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="#1fa855"><path d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0Zm0 21.785a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 5.45 0 9.884 4.434 9.881 9.892-.003 5.45-4.437 9.884-9.889 9.884Zm5.422-7.403c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>
+        WhatsApp / Call: +91 63878 78493
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffd2a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        id@idmapharma.com &nbsp;&middot;&nbsp; www.idmapharma.com
+      </div>
+      <div class="row muted">Rishi House, Maninagar, Ahmedabad, Gujarat</div>
+    </div>
+    <div>
+      <div class="qr"><img src="qr-website.svg" alt="QR code: www.idmapharma.com"></div>
+      <div class="qr-cap">Scan for website</div>
+    </div>
+  </div>
+</div></div>
+</section>
+
+<!-- =====================================================================
+     PAGE 2 · INSIDE FRONT COVER · product list 1 of 2
+     SAMPLE BRAND NAMES: replace every name below with your registered brands
+     ===================================================================== -->
+<section class="sheet" aria-label="Inside front cover: product list 1">
+<div class="bleedbox"><div class="trim">
+  <div class="list-head">
+    <div class="topbar"></div>
+    <p class="eyebrow">Product list &middot; 1 of 2</p>
+    <h2>Our product range</h2>
+    <img src="idma-logo.png" alt="IDMA Pharma">
+  </div>
+
+  <div class="plist">
+    <table>
+      <colgroup><col class="c-brand"><col><col class="c-form"></colgroup>
+      <thead><tr><th>Brand</th><th>Composition</th><th>Form</th></tr></thead>
+      <tbody>
+        <tr class="seg"><td colspan="3">General &amp; Antibiotics</td></tr>
+        <tr><td class="brand">IDMACLAV 625</td><td class="comp">Amoxycillin 500&nbsp;mg + Clavulanic Acid 125&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMAZITH 500</td><td class="comp">Azithromycin 500&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMAFIX 200</td><td class="comp">Cefixime 200&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMAPOD-CV</td><td class="comp">Cefpodoxime Proxetil 200&nbsp;mg + Clavulanic Acid 125&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMAMOX 500</td><td class="comp">Amoxycillin 500&nbsp;mg</td><td class="form">Capsule</td></tr>
+        <tr><td class="brand">IDMADOXY 100</td><td class="comp">Doxycycline 100&nbsp;mg</td><td class="form">Capsule</td></tr>
+
+        <tr class="seg"><td colspan="3">Gastro</td></tr>
+        <tr><td class="brand">IDMAPAN 40</td><td class="comp">Pantoprazole 40&nbsp;mg</td><td class="form">Gastro-resistant tablet</td></tr>
+        <tr><td class="brand">IDMAPAN-DSR</td><td class="comp">Pantoprazole 40&nbsp;mg&nbsp;(EC) + Domperidone 30&nbsp;mg&nbsp;(SR)</td><td class="form">Capsule</td></tr>
+        <tr><td class="brand">IDMARAB-DSR</td><td class="comp">Rabeprazole Sodium 20&nbsp;mg&nbsp;(EC) + Domperidone 30&nbsp;mg&nbsp;(SR)</td><td class="form">Capsule</td></tr>
+        <tr><td class="brand">IDMASET MD 4</td><td class="comp">Ondansetron 4&nbsp;mg</td><td class="form">Mouth-dissolving tablet</td></tr>
+        <tr><td class="brand">IDMASUCRA-O</td><td class="comp">Sucralfate 1&nbsp;g + Oxetacaine 10&nbsp;mg per&nbsp;10&nbsp;ml</td><td class="form">Suspension</td></tr>
+
+        <tr class="seg"><td colspan="3">Pain, Fever &amp; Allergy</td></tr>
+        <tr><td class="brand">IDMAPARA 650</td><td class="comp">Paracetamol 650&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMACLO-P</td><td class="comp">Aceclofenac 100&nbsp;mg + Paracetamol 325&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMAMONT-LC</td><td class="comp">Montelukast 10&nbsp;mg + Levocetirizine 5&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMALEVO 5</td><td class="comp">Levocetirizine 5&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr class="seg"><td colspan="3">Dental &amp; Nutrition</td></tr>
+        <tr><td class="brand">IDMAKET DT</td><td class="comp">Ketorolac Tromethamine 10&nbsp;mg</td><td class="form">Dispersible tablet</td></tr>
+        <tr><td class="brand">IDMAPRO</td><td class="comp">Protein powder with vitamins &amp; minerals</td><td class="form">Powder</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="list-foot">
+    <p class="legend">For the use of a Registered Medical Practitioner or a Hospital or a Laboratory only. Full prescribing information available on request.</p>
+    <p class="next">More products on the back cover &rarr;</p>
+  </div>
+</div></div>
+</section>
+
+<!-- =====================================================================
+     PAGE 3 · PRESCRIPTION LEAF (100 per pad) · 1–2 colour on 70 GSM maplitho
+     Only the doctor block changes per doctor. Top 10 mm stays blank for gum.
+     ===================================================================== -->
+<section class="sheet" aria-label="Prescription leaf">
+<div class="bleedbox"><div class="trim">
+  <div class="rx">
+    <div class="glue"></div>
+    <div class="doc">
+      <div>
+        <p class="name">Dr. Doctor's Name</p>
+        <p class="deg">MBBS, MD (General Medicine)</p>
+        <p class="spec">Consultant Physician</p>
+        <p class="reg">Reg. No.: UPMC-XXXXX</p>
+      </div>
+      <div class="clinic">
+        <b>Clinic Name</b>
+        Clinic address line, Area<br>
+        Kanpur, Uttar Pradesh 2080XX<br>
+        Ph: +91 XXXXX XXXXX<br>
+        <span class="t">Timings:</span> 10 am–2 pm &amp; 5–8 pm<br>
+        <span class="t">Closed:</span> Sunday
+      </div>
+    </div>
+
+    <div class="pt">
+      <span class="field">Name</span>
+      <span class="field">Age</span>
+      <span class="field">Sex</span>
+      <span class="field">Date</span>
+    </div>
+    <div class="vit">
+      <span class="field">Wt<small>kg</small></span>
+      <span class="field">BP<small>mmHg</small></span>
+      <span class="field">Pulse<small>/min</small></span>
+      <span class="field">Temp<small>&deg;F</small></span>
+    </div>
+
+    <div class="body">
+      <div class="notes">
+        <div>Complaints</div>
+        <div>Examination</div>
+        <div>Diagnosis</div>
+        <div>Investigations</div>
+      </div>
+      <div class="rxarea"><span class="sym">&#8478;</span></div>
+    </div>
+
+    <div class="closing">
+      <div>
+        <span class="field">Advice</span>
+        <span class="field" style="margin-top:3.4mm">Next visit</span>
+      </div>
+      <div class="sign">Signature</div>
+    </div>
+  </div>
+
+  <div class="rx-foot">
+    <span>Not valid for medico-legal purposes</span>
+    <span class="court">Courtesy: <img src="idma-logo.png" alt="IDMA Pharma"></span>
+  </div>
+</div></div>
+</section>
+
+<!-- =====================================================================
+     PAGE 4 · BACK COVER (outside) · product list 2 of 2
+     SAMPLE BRAND NAMES: replace every name below with your registered brands
+     ===================================================================== -->
+<section class="sheet" aria-label="Back cover: product list 2">
+<div class="bleedbox"><div class="trim">
+  <div class="list-head">
+    <div class="topbar"></div>
+    <p class="eyebrow">Product list &middot; 2 of 2</p>
+    <h2>Our product range</h2>
+    <img src="idma-logo.png" alt="IDMA Pharma">
+  </div>
+
+  <div class="plist">
+    <table>
+      <colgroup><col class="c-brand"><col><col class="c-form"></colgroup>
+      <thead><tr><th>Brand</th><th>Composition</th><th>Form</th></tr></thead>
+      <tbody>
+        <tr class="seg"><td colspan="3">Gynae &amp; Infertility</td></tr>
+        <tr><td class="brand">IDMAFER-XT</td><td class="comp">Ferrous Ascorbate eq. to Elemental Iron 100&nbsp;mg + Folic Acid 1.5&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMACAL-D3</td><td class="comp">Calcium Carbonate 1250&nbsp;mg (eq. to Elemental Calcium 500&nbsp;mg) + Vitamin D3 500&nbsp;IU</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMADYD 10</td><td class="comp">Dydrogesterone 10&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMATX-MF</td><td class="comp">Tranexamic Acid 500&nbsp;mg + Mefenamic Acid 250&nbsp;mg</td><td class="form">Tablet</td></tr>
+        <tr><td class="brand">IDMACLOM 50</td><td class="comp">Clomiphene Citrate 50&nbsp;mg</td><td class="form">Tablet</td></tr>
+
+        <tr class="seg"><td colspan="3">Pediatric</td></tr>
+        <tr><td class="brand">IDMACLAV DS</td><td class="comp">Amoxycillin 400&nbsp;mg + Clavulanic Acid 57&nbsp;mg per&nbsp;5&nbsp;ml</td><td class="form">Dry syrup</td></tr>
+        <tr><td class="brand">IDMAFIX DS</td><td class="comp">Cefixime 100&nbsp;mg per&nbsp;5&nbsp;ml</td><td class="form">Dry syrup</td></tr>
+        <tr><td class="brand">IDMAPARA 250</td><td class="comp">Paracetamol 250&nbsp;mg per&nbsp;5&nbsp;ml</td><td class="form">Suspension</td></tr>
+        <tr><td class="brand">IDMASET</td><td class="comp">Ondansetron 2&nbsp;mg per&nbsp;5&nbsp;ml</td><td class="form">Syrup</td></tr>
+        <tr><td class="brand">IDMAZINC</td><td class="comp">Zinc Sulphate eq. to Elemental Zinc 20&nbsp;mg per&nbsp;5&nbsp;ml</td><td class="form">Syrup</td></tr>
+
+        <tr class="seg"><td colspan="3">Derma &amp; Skin Care</td></tr>
+        <tr><td class="brand">IDMAZOLE</td><td class="comp">Clotrimazole 1%&nbsp;w/w</td><td class="form">Cream</td></tr>
+        <tr><td class="brand">IDMALULI</td><td class="comp">Luliconazole 1%&nbsp;w/w</td><td class="form">Cream</td></tr>
+        <tr><td class="brand">IDMAFUSI</td><td class="comp">Fusidic Acid 2%&nbsp;w/w</td><td class="form">Cream</td></tr>
+        <tr><td class="brand">IDMAPERM</td><td class="comp">Permethrin 5%&nbsp;w/w</td><td class="form">Cream</td></tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="back-band">
+    <div class="stripe"></div>
+    <div class="txt">
+      <p class="ask">Ask us for the <em>full product list</em> &amp; prescribing information</p>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="#1fa855"><path d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0Zm0 21.785a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 5.45 0 9.884 4.434 9.881 9.892-.003 5.45-4.437 9.884-9.889 9.884Zm5.422-7.403c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg>
+        WhatsApp / Call: +91 63878 78493
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffd2a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        id@idmapharma.com &nbsp;&middot;&nbsp; www.idmapharma.com
+      </div>
+    </div>
+    <div class="qr"><img src="qr-website.svg" alt="QR code: www.idmapharma.com"></div>
+    <p class="legend">For the use of a Registered Medical Practitioner or a Hospital or a Laboratory only. IDMA Pharma, Rishi House, Maninagar, Ahmedabad.</p>
+  </div>
+</div></div>
+</section>
+
+<script>
+  // Render script calls window.printMode() for the printer's PDF (bleed + crop marks)
+  window.printMode = function () {
+    document.documentElement.classList.add('print');
+    var names = ['Front cover (outside), 4-colour', 'Inside front cover, 4-colour', 'Prescription leaf, 2-colour', 'Back cover (outside), 4-colour'];
+    var st = document.createElement('style');
+    st.textContent = '@page { size: 168mm 230mm; margin: 0; }';
+    document.head.appendChild(st);
+    document.querySelectorAll('.sheet').forEach(function (sh, i) {
+      var t = 10, r = 158, b = 220, L = 7;
+      var lines = [
+        [0, t, L, t], [168 - L, t, 168, t], [0, b, L, b], [168 - L, b, 168, b],
+        [t, 0, t, L], [r, 0, r, L], [t, 230 - L, t, 230], [r, 230 - L, r, 230]
+      ].map(function (l) { return '<line x1="' + l[0] + '" y1="' + l[1] + '" x2="' + l[2] + '" y2="' + l[3] + '"/>'; }).join('');
+      sh.insertAdjacentHTML('beforeend',
+        '<svg class="marks" viewBox="0 0 168 230" aria-hidden="true"><g stroke="#000" stroke-width=".1">' + lines + '</g></svg>' +
+        '<p class="slug">IDMA Pharma Rx pad &middot; ' + names[i] + ' &middot; Trim 148 &times; 210 mm (A5) &middot; Bleed 3 mm</p>');
+    });
+  };
+</script>
+</body>
+</html>
