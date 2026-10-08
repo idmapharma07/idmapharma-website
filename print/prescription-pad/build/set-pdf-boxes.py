@@ -1,6 +1,6 @@
 """Set TrimBox and BleedBox on the printer's PDF (needs: pip install pypdf).
 
-usage: python3 set-pdf-boxes.py print-raw.pdf IDMA-Rx-pad-PRINT-bleed-cropmarks.pdf
+usage: python3 set-pdf-boxes.py print-raw.pdf IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf
 Sheets are 168 x 230 mm with the A5 trim 10 mm in from each edge and 3 mm bleed.
 """
 import sys

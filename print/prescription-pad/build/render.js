@@ -1,7 +1,7 @@
 // Renders prescription-pad.html: page previews (PNG), proof PDFs (covers + leaf),
 // the raw printer's PDF for the covers, and layout checks.
 // usage: node build/render.js <tmp-dir>
-//   then: python3 build/set-pdf-boxes.py <tmp-dir>/print-raw.pdf IDMA-Rx-pad-COVERS-PRINT-bleed-cropmarks.pdf
+//   then: python3 build/set-pdf-boxes.py <tmp-dir>/print-raw.pdf IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf
 const { chromium } = require('playwright');
 const path = require('path');
 const os = require('os');
@@ -19,9 +19,17 @@ const os = require('os');
       const box = el => el.getBoundingClientRect();
       // multi-column product list must not overflow its box (hidden overflow columns)
       const pl = s.querySelector('.plist2');
-      if (pl) out.push(`p${i+1}: product list ${pl.scrollWidth > pl.clientWidth + 1 ? 'OVERFLOWS into a hidden column' : 'fits'} (box ${mm(pl.clientHeight)}mm tall)`);
+      if (pl) {
+        const pb = pl.getBoundingClientRect().bottom;
+        const low = Math.max(...[...pl.querySelectorAll('.pc, .gh')].map(el => el.getBoundingClientRect().bottom));
+        const bad = pl.scrollWidth > pl.clientWidth + 1 ? 'OVERFLOWS into a hidden column' : low > pb + 0.5 ? `OVERFLOWS the bottom by ${mm(low - pb)}mm` : `fits, ${mm(pb - low)}mm spare`;
+        out.push(`p${i+1}: product list ${bad} (box ${mm(pl.clientHeight)}mm tall)`);
+      }
       // overlapping absolutely-positioned blocks
-      const blocks = [...s.querySelectorAll('.trim > *')].filter(el => getComputedStyle(el).position === 'absolute' && box(el).height > 0 && !el.matches('.cover-top, .cover-curve, .ivbg, .bar, .stripe'));
+      const blocks = [...s.querySelectorAll('.trim > *')].filter(el => getComputedStyle(el).position === 'absolute' && box(el).height > 0 && !el.matches('.cover-top, .cover-curve, .ivbg, .bar, .stripe, .iv-glow, .iv-shadow, .iv-hero, .plfoot.hinge'));
+      // page 2 footer sits under column 1: the column-1 cards above it must end before it starts
+      const hf = s.querySelector('.plfoot.hinge');
+      if (hf && pl) { const f = box(hf); const hit = [...pl.querySelectorAll('.pc, .gh')].filter(el => box(el).left < f.right && box(el).bottom > f.top); if (hit.length) out.push(`p${i+1}: OVERLAP product list / page-2 footer`); }
       for (let a = 0; a < blocks.length; a++) for (let b = a + 1; b < blocks.length; b++) {
         const A = box(blocks[a]), B = box(blocks[b]);
         const ov = Math.min(A.right, B.right) - Math.max(A.left, B.left) > 1 && Math.min(A.bottom, B.bottom) - Math.max(A.top, B.top) > 1;
@@ -38,6 +46,8 @@ const os = require('os');
     return out;
   });
   console.log(report.join('\n') || 'no layout problems found');
+  // previews: white surround so rounding at the sheet edge doesn't pick up the grey page background
+  await page.addStyleTag({ content: 'html, body { background: #fff !important; } .sheet { box-shadow: none !important; }' });
   const names = ['1-front-cover', '2-inside-front-product-list', '3-inside-back-thank-you', '4-back-cover-improvit', '5-prescription-leaf'];
   const sheets = await page.$$('.sheet');
   for (let i = 0; i < sheets.length; i++) await sheets[i].screenshot({ path: path.join(dir, `${names[i]}.png`) });

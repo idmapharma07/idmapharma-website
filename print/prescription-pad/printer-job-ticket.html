@@ -7,10 +7,10 @@
 <style>
   @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-var.woff2) format("woff2"); font-weight: 200 800; }
   :root { --red: #c8102e; --ink: #1a1a1a; --grey: #555; --rule: #cfcfcf; --tint: #fbe1e4; }
-  @page { size: A4; margin: 9mm 12mm; }
+  @page { size: A4; margin: 8mm 12mm; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #fff; }
-  body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); font-size: 7.9pt; line-height: 1.36; max-width: 182mm; margin: 0 auto; }
+  body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); font-size: 7.4pt; line-height: 1.34; max-width: 182mm; margin: 0 auto; }
   header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: .6mm solid var(--red); padding-bottom: 2.5mm; }
   h1 { font-size: 15pt; font-weight: 800; letter-spacing: -.01em; }
   header p { color: var(--grey); font-weight: 600; }
@@ -41,16 +41,17 @@
 <h2>Before press: these items are still open</h2>
 <div class="block">
   <ol>
-    <li><b>Compositions (pages 2, 3, 4):</b> taken from IDMA's catalogue with IDMA's corrections. Before press, IDMA checks every line against the approved pack label. Strengths are still to be added for MITTHU-AP, WOMI-G, IMPROLAN-FC and IMPROVIT.</li>
-    <li><b>Logo:</b> the supplied PNG is 225 &times; 112 px (143 ppi at 40 mm on the cover). Use IDMA's vector logo (AI / CDR / EPS / PDF), or a PNG at least 1000 px wide.</li>
-    <li><b>Page 3:</b> Kanpur representative and stockist (name, area, phone). <b>Prescription leaf:</b> each doctor's details; the doctor signs the proof.</li>
-    <li><b>Artwork file:</b> the PDF is RGB from a browser, with Type 3 fonts. Re-set it in CorelDraw or Illustrator using the colours below, or convert it to CMYK and outline the fonts. Font: Plus Jakarta Sans (free on Google Fonts; use the static TTFs).</li>
+    <li><b>Compositions (pages 2, 3, 4):</b> from IDMA's catalogue with IDMA's corrections. IDMA checks every line against the approved pack label before press. Strengths still to add: MITTHU-AP (must be an immediate-release Aceclofenac 100 mg + Paracetamol 325 mg tablet; 50 mg + 125 mg is banned), IMPROLAN-FC, IMPROVIT. Confirm the &ldquo;per 5 ml&rdquo; basis for IDCUF-AX, IDCUF-PLUS, IDCYP-PLUS and WOMI-G.</li>
+    <li><b>IDCUF-PLUS (page 2)</b> carries the statutory warning for Chlorpheniramine + Phenylephrine combinations (MoHFW s.26A notification, Aug 2026). Do not remove it or set it smaller.</li>
+    <li><b>Logo:</b> the supplied PNG is 225 &times; 112 px (143 ppi at 40 mm on the cover). Use IDMA's vector logo (AI / CDR / EPS / PDF), or a PNG at least 1000 px wide. <b>IMPROVIT image (page 4):</b> 877 &times; 891 px, about 240 ppi at 92 mm; use the original file if a larger one exists.</li>
+    <li><b>Artwork file:</b> the layout PDF is RGB from a browser, with Type 3 fonts. It is <b>not plate-ready</b>: re-set it in CorelDraw or Illustrator with the colours below, or convert to CMYK (black text to K100 overprint) and outline the fonts. Font: Plus Jakarta Sans (free on Google Fonts; use the static TTFs).</li>
+    <li><b>Prescription leaf:</b> each doctor's details; the doctor signs the proof. Page 3 representative and stockist are blank write-in lines (hand-written or stamped).</li>
   </ol>
 </div>
 
 <h2>Files</h2>
 <table>
-  <tr><td><b>IDMA-Rx-pad-COVERS-PRINT-bleed-cropmarks.pdf</b></td><td>The 4 cover pages on 168 &times; 230 mm sheets: A5 trim, 3 mm bleed, crop marks, TrimBox and BleedBox set. Press file for the covers.</td></tr>
+  <tr><td><b>IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf</b></td><td>The 4 cover pages on 168 &times; 230 mm sheets: A5 trim, 3 mm bleed, crop marks, TrimBox and BleedBox set. Layout for imposition; convert or re-set before plating (item 4).</td></tr>
   <tr><td><b>IDMA-Rx-pad-LEAF-A5.pdf</b></td><td>The prescription leaf (no bleed). Per-doctor details change on the black plate only.</td></tr>
   <tr><td><b>IDMA-Rx-pad-COVERS-PROOF-A5.pdf</b></td><td>Covers at A5 trim size, for approval on screen or WhatsApp only. Not for press.</td></tr>
   <tr><td><b>prescription-pad.html</b></td><td>Editable source. Open in Chrome to view.</td></tr>
@@ -59,7 +60,7 @@
 <h2>Construction</h2>
 <table>
   <thead><tr><th style="width:30%">Part</th><th style="width:30%">Stock</th><th>Print and finish</th></tr></thead>
-  <tr><td><b>Front cover</b><br>page 1 outside, page 2 inside</td><td>300 GSM art card (C2S)</td><td>4/4 CMYK. Back page 2 <b>head-to-foot</b> (work-and-tumble), so it reads upright when the cover is flipped up over the glued head. Matt BOPP lamination on the outside. Crease 10 mm from the head.</td></tr>
+  <tr><td><b>Front cover</b><br>page 1 outside, page 2 inside</td><td>300 GSM art card (C2S)</td><td>4/4 CMYK. Back page 2 <b>head-to-foot</b> (work-and-tumble), so it reads upright when the cover is flipped up over the glued head. Matt BOPP lamination on the outside. Crease 10 mm from the head; no type within 3 mm of the crease on either face.</td></tr>
   <tr><td><b>Leaves</b><br>100 per pad</td><td>70 GSM maplitho (JK, Century or TNPL)</td><td><b>2/0: PMS 186 U + Black.</b> Red = header rule, Rx symbol, courtesy line. Everything per doctor sits on the black plate, so one red shell can be printed for all doctors. No bleed.</td></tr>
   <tr><td><b>Back cover</b><br>page 3 inside, page 4 outside</td><td>Option A: 350 GSM art card printed both sides. Option B (stiffer): two 130&ndash;170 GSM printed sheets pasted on both faces of 1.2&ndash;1.5 mm greyboard</td><td>4/4 CMYK, back <b>head-to-head</b> (work-and-turn). Page 3 faces the leaves; page 4 faces out. Matt BOPP lamination on page 4.</td></tr>
   <tr><td><b>Binding</b></td><td colspan="2">Padding gum at the head; top 10 mm of each leaf is blank for the gum. No perforation. Trim 3 sides to 148 &times; 210 mm after padding. If binding tape is added, tell IDMA first: pages 2, 3 and 4 then need 12 mm clear at the head.</td></tr>
@@ -81,10 +82,11 @@
   <div>
     <h2>Checks on the proof</h2>
     <ul>
-      <li>QR codes scan to WhatsApp +91 63878 78493 (pages 1 and 4: product list; page 3: new pad). Modules K100 only; keep the white border (19 mm overall, 4-module quiet zone).</li>
+      <li>QR codes scan to WhatsApp +91 63878 78493 (pages 1 and 4: product list; page 3: new pad); decode checked on the layout file. Modules K100 only; keep the white border (19 mm overall, 0.46 mm modules, 4-module quiet zone). Scan the hard proof with a phone.</li>
       <li>White text in the navy bands is 7 pt or more, upright, paper white. Keep C, M and Y pulled back around reverse type; do not choke the navy.</li>
       <li>No text closer than 5 mm to the trim.</li>
       <li>Legend "For the use only of registered medical practitioners or a hospital or a laboratory" stays at the top of pages 1 to 4.</li>
+      <li>Add no disease names or indications to the covers (DMR Act / Schedule J terms such as liver disorders, growth, height).</li>
       <li>One hard or wet proof of the covers before the run.</li>
     </ul>
     <h2>Order</h2>

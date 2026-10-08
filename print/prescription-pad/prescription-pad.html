@@ -60,7 +60,7 @@
   html.print .bar .o { right: -3mm; top: -3mm; height: 5.6mm; }
   html.print .back-band { left: -3mm; right: -3mm; bottom: -3mm; height: 39mm; padding: 5mm 12mm 3mm; }
   .marks { position: absolute; inset: 0; width: 168mm; height: 230mm; pointer-events: none; }
-  .slug { position: absolute; left: 13mm; top: 2.2mm; font-size: 5pt; color: #000; letter-spacing: .02em; }
+  .slug { position: absolute; left: 13mm; width: 141mm; top: 1.4mm; font-size: 5pt; line-height: 1.3; color: #000; letter-spacing: .02em; }
   .slug b { color: #c00; }
 
   /* RMP-only legend: Drugs & Magic Remedies Rules r.5 wording, at the top, conspicuous */
@@ -69,7 +69,7 @@
   /* ---------- 1. FRONT COVER ---------- */
   .cover-top { position: absolute; inset: 0 0 auto 0; height: 127mm; background: linear-gradient(160deg, #c8102e 0%, #a30d25 62%, #7e0a1d 100%); }
   .cover-curve { position: absolute; left: -1mm; top: 99mm; width: 150mm; height: 30mm; }
-  .cover-rmp { position: absolute; top: 6.5mm; width: 100%; text-align: center; color: #fff; }
+  .cover-rmp { position: absolute; top: 5mm; width: 100%; text-align: center; color: #fff; }
   .cover-logo { position: absolute; top: 14mm; left: 50%; transform: translateX(-50%); background: #fff; border-radius: 30mm; padding: 2.6mm 7mm; }
   .cover-logo img { display: block; width: 40mm; height: auto; }
   .cover-title { position: absolute; top: 44mm; width: 100%; text-align: center; color: #fff; font-size: 24pt; font-weight: 800; line-height: 1.08; letter-spacing: -.01em; }
@@ -177,37 +177,44 @@
   .cover-about { position: absolute; top: 66mm; left: 15mm; right: 15mm; text-align: center; color: #fff; font-size: 8.2pt; line-height: 1.45; font-weight: 500; text-wrap: balance; }
 
   /* product list page */
-  .plh { position: relative; height: 29mm; padding: 6.4mm 9mm 0; }
+  .plh { position: relative; height: 27.5mm; padding: 6.4mm 9mm 0; }
   .plh::after { content: ""; position: absolute; left: 9mm; right: 9mm; bottom: 0; border-bottom: .3mm solid var(--rule); }
   .plh .eyebrow { font-size: 6.6pt; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--red); margin-top: 2.6mm; }
   .plh h2 { font-size: 15pt; font-weight: 800; color: var(--navy); line-height: 1.15; margin-top: .4mm; letter-spacing: -.01em; }
   .plh img { position: absolute; right: 9mm; top: 11.5mm; width: 20mm; }
-  .plist2 { position: absolute; left: 9mm; right: 9mm; top: 31mm; bottom: 13mm; column-count: 2; column-gap: 6mm; column-fill: balance; }
+  .plist2 { position: absolute; left: 9mm; right: 9mm; top: 29.5mm; bottom: 13.5mm; column-count: 2; column-gap: 6mm; column-fill: balance; }
   .keep, .pc { break-inside: avoid; }
   .gh { font-size: 6.8pt; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--red-dk); background: var(--red-tint); border-left: .9mm solid var(--red); padding: 1mm 1.6mm; margin: 1.4mm 0 .4mm; }
-  .keep:first-child .gh { margin-top: 0; }
-  .pc { padding: 1.2mm 0 1.25mm; border-bottom: .09mm solid var(--rule); }
+  .keep:first-child .gh, .keep.colbreak .gh { margin-top: 0; }
+  .keep.colbreak { break-before: column; }
+  .pc { padding: .95mm 0 1mm; border-bottom: .09mm solid var(--rule); }
   .pn { font-size: 8.8pt; font-weight: 800; color: var(--red); line-height: 1.2; }
   .pn span { font-size: 6.6pt; font-weight: 600; color: var(--grey); margin-left: 1.2mm; letter-spacing: .02em; }
   .pcomp { font-size: 7pt; font-weight: 500; color: var(--text); line-height: 1.3; margin-top: .35mm; }
   .pcomp b { font-weight: 700; color: var(--grey); }
   .plfoot { position: absolute; left: 9mm; right: 9mm; bottom: 6.5mm; display: flex; justify-content: space-between; gap: 4mm; font-size: 6.6pt; color: var(--grey); font-weight: 500; line-height: 1.4; }
   .plfoot b { color: var(--red); font-weight: 700; }
+  .plfoot.hinge { bottom: 13.5mm; right: auto; width: 62mm; flex-direction: column; gap: 0; }   /* page 2 is backed head-to-foot: its foot is the hinge; nothing below 13.5 mm (crease at 10 mm). Sits under the shorter column 1 */
+  .pcomp.pwarn { font-size: 6.6pt; font-weight: 700; color: var(--red-dk); }
+  .nb { white-space: nowrap; }
 
   /* inside back: thank-you + reorder + spotlight */
-  .ty { position: absolute; left: 9mm; right: 9mm; top: 13mm; }
+  .ty { position: absolute; left: 9mm; right: 32mm; top: 13mm; }
   .ty h2 { font-size: 22pt; font-weight: 800; color: var(--navy); line-height: 1.05; letter-spacing: -.015em; }
   .ty h2 em { font-style: normal; color: var(--red); }
   .ty p { font-size: 8.6pt; color: var(--grey); font-weight: 500; margin-top: 1.6mm; }
-  .reorder { position: absolute; left: 9mm; right: 9mm; top: 37mm; border: .35mm solid var(--red); border-radius: 2.4mm; padding: 3.2mm 3.6mm; display: grid; grid-template-columns: 1fr 19mm; gap: 4mm; align-items: center; }
+  .reorder { position: absolute; left: 9mm; right: 9mm; top: 37mm; border: .35mm solid var(--red); border-radius: 2.4mm; padding: 3.2mm 3.6mm; display: grid; grid-template-columns: 1fr 22mm; gap: 4mm; align-items: center; }
   .reorder .q { font-size: 10pt; font-weight: 800; color: var(--red); }
   .reorder .s { font-size: 7.4pt; color: var(--text); font-weight: 500; margin-top: .8mm; line-height: 1.35; }
   .reorder .kv { display: grid; grid-template-columns: auto 1fr; column-gap: 2.4mm; row-gap: .8mm; margin-top: 2mm; font-size: 7.2pt; }
   .reorder .kv span:nth-child(odd) { color: var(--grey); font-weight: 700; }
   .reorder .kv span:nth-child(even) { color: var(--text); font-weight: 700; }
-  .reorder .qrcap { font-size: 6.2pt; color: var(--grey); text-align: center; margin-top: .8mm; font-weight: 600; }
-  .spot-h { position: absolute; left: 9mm; right: 9mm; top: 80mm; font-size: 6.8pt; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--red); border-bottom: .3mm solid var(--rule); padding-bottom: 1.4mm; }
-  .spot { position: absolute; left: 9mm; right: 9mm; top: 86mm; display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; }
+  .reorder .qrcap { font-size: 6.6pt; color: var(--grey); text-align: center; margin-top: .8mm; font-weight: 600; white-space: nowrap; }
+  .reorder .qr { margin: 0 auto; }
+  .reorder .kv .wl { border-bottom: .2mm solid var(--grey); min-height: 3.4mm; }   /* write-in line: rep / stockist fill by hand or stamp */
+  .ty-logo { position: absolute; top: 13.5mm; right: 9mm; width: 20mm; }
+  .spot-h { position: absolute; left: 9mm; right: 9mm; top: 76mm; font-size: 6.8pt; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--red); border-bottom: .3mm solid var(--rule); padding-bottom: 1.4mm; }
+  .spot { position: absolute; left: 9mm; right: 9mm; top: 82mm; display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; }
   .spot .card { background: var(--red-tint); border-radius: 2mm; padding: 2.4mm 3mm; }
   .spot .card .pn { font-size: 10pt; }
   .spot .card .pcomp { font-size: 7.2pt; margin-top: .8mm; }
@@ -217,30 +224,24 @@
   html.print .ivbg { inset: -3mm -3mm auto -3mm; height: 183mm; }
   .iv-rmp { position: absolute; top: 6.4mm; left: 9mm; right: 9mm; }
   .iv-logo { position: absolute; top: 12mm; right: 9mm; width: 20mm; }
-  .iv-eyebrow { position: absolute; top: 15mm; left: 9mm; font-size: 7pt; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--orange); }
+  .iv-eyebrow { position: absolute; top: 15mm; left: 9mm; font-size: 7pt; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: #a3121f; }
   .iv-name { position: absolute; top: 19mm; left: 8.4mm; font-size: 38pt; font-weight: 800; color: #a3121f; letter-spacing: -.02em; line-height: 1; }
-  .iv-tag { position: absolute; top: 35.5mm; left: 9mm; font-size: 13pt; font-weight: 700; color: var(--navy); font-style: italic; }
-  .iv-ing { position: absolute; top: 43mm; left: 9mm; width: 70mm; font-size: 8.4pt; font-weight: 700; color: #a3121f; line-height: 1.4; }
-  .iv-form { position: absolute; top: 55mm; left: 9mm; display: flex; gap: 1.6mm; }
-  .iv-form span { font-size: 7.2pt; font-weight: 700; color: #fff; background: #a3121f; border-radius: 4mm; padding: 1mm 3mm; }
-  .iv-art { position: absolute; top: 27mm; right: 4mm; width: 60mm; height: 72mm; }
-  .iv-roles { position: absolute; top: 101mm; left: 9mm; right: 9mm; display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; }
-  .iv-roles div { background: #fff; border-radius: 2mm; padding: 2.4mm 2.8mm; border-left: 1mm solid #a3121f; }
-  .iv-roles b { display: block; font-size: 8.4pt; font-weight: 800; color: #a3121f; }
-  .iv-roles span { display: block; font-size: 7pt; color: var(--text); font-weight: 500; margin-top: .6mm; line-height: 1.3; }
-  .iv-ind { position: absolute; top: 66mm; left: 9mm; width: 72mm; }
-  .iv-ind p { font-size: 6.8pt; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.4mm; }
-  .iv-ind div { display: flex; flex-direction: column; align-items: flex-start; gap: 1.6mm; }
-  .iv-ind span { font-size: 7.4pt; font-weight: 700; color: var(--navy); background: #fff; border: .3mm solid #f3c9b0; border-radius: 4mm; padding: 1mm 2.8mm; }
-  .iv-comp { position: absolute; top: 134mm; left: 9mm; right: 9mm; background: #fff; border-radius: 2mm; padding: 2.6mm 3mm; font-size: 7.2pt; color: var(--text); line-height: 1.4; }
-  .iv-comp b { font-weight: 800; color: #a3121f; }
-  .iv-date { position: absolute; top: 148mm; left: 9mm; right: 9mm; font-size: 6.4pt; color: var(--grey); font-weight: 500; }
+  .iv-ing { position: absolute; top: 33.6mm; left: 9mm; right: 9mm; font-size: 7.8pt; font-weight: 700; color: var(--navy); line-height: 1.35; }
+  .iv-tag { position: absolute; top: 38.8mm; left: 9mm; font-size: 13pt; font-weight: 700; color: #a3121f; font-style: italic; }
+  .iv-glow { position: absolute; left: 12mm; top: 45mm; width: 124mm; height: 100mm; background: radial-gradient(ellipse at 50% 46%, #fff 0%, rgb(255 255 255 / .75) 38%, rgb(255 255 255 / 0) 70%); }
+  .iv-shadow { position: absolute; left: 55.5mm; top: 137.4mm; width: 36mm; height: 4mm; background: radial-gradient(ellipse at 50% 50%, rgb(90 30 10 / .28) 0%, rgb(90 30 10 / 0) 70%); }
+  .iv-hero { position: absolute; left: 28mm; top: 46.5mm; width: 92mm; height: auto; }   /* 877 px wide: about 242 ppi at 92 mm */
+  .iv-pack { position: absolute; top: 119mm; display: flex; flex-direction: column; align-items: center; gap: .6mm; }
+  .iv-pack.l { left: 11mm; } .iv-pack.r { right: 11mm; }
+  .iv-pack b { font-size: 6.6pt; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #a3121f; }
+  .iv-pack span { font-size: 9pt; font-weight: 800; color: #fff; background: #a3121f; border-radius: 4mm; padding: 1.1mm 3.4mm; }
+  .iv-date { position: absolute; top: 145.6mm; left: 9mm; right: 9mm; text-align: center; font-size: 6.4pt; color: var(--grey); font-weight: 500; }
   .contact-band.iv { height: 30mm; }
-  .iv-also { position: absolute; left: 9mm; right: 9mm; top: 153.5mm; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.2mm; }
-  .iv-also > p { grid-column: 1 / -1; font-size: 6.6pt; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
+  .iv-also { position: absolute; left: 9mm; right: 9mm; top: 151mm; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.2mm; }
+  .iv-also > p { grid-column: 1 / -1; font-size: 6.6pt; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #a3121f; }
   .iv-also div { background: #fff; border-radius: 1.6mm; padding: 1.8mm 2.2mm; }
   .iv-also .pn { font-size: 8pt; }
-  .iv-also .pcomp { font-size: 6.6pt; margin-top: .4mm; }
+  .iv-also .pcomp { font-size: 7pt; margin-top: .4mm; }
 </style>
 </head>
 <body>
@@ -280,7 +281,7 @@
 
   <div class="segments">
     <span>Anti-infectives</span><span>Gastro</span><span>Analgesics</span><span>Respiratory &amp; Anti-allergics</span>
-    <span>Paediatric</span><span>Derma</span><span>Liver &amp; Appetite</span><span>Nutrition</span>
+    <span>Paediatric</span><span>Derma</span><span>Appetite &amp; Nutrition</span><span>Ayurvedic</span>
   </div>
   <p class="values">Integrity<i>&bull;</i>Quality<i>&bull;</i>Innovation<i>&bull;</i>Reliability</p>
 
@@ -290,7 +291,7 @@
       <div class="row"><svg viewBox="0 0 24 24" fill="#1fa855" aria-hidden="true"><path d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0Zm0 21.785a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.450 4.436-9.884 9.888-9.884 5.45 0 9.884 4.434 9.881 9.892-.003 5.45-4.437 9.884-9.889 9.884Zm5.422-7.403c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.040 1.016-1.040 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg> WhatsApp / Call: +91 63878 78493</div>
       <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd2a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> id@idmapharma.com &nbsp;&middot;&nbsp; www.idmapharma.com</div>
       <div class="row addr">IDMA Pharma, Rishi House, Maninagar, Ahmedabad, Gujarat 380008</div>
-      <p class="scan">Scan the code for our product list on WhatsApp &rarr;</p>
+      <p class="scan">Scan the code for our product list on WhatsApp</p>
     </div>
     <img class="qr" src="qr-whatsapp.svg" alt="QR code: WhatsApp IDMA Pharma for the product list">
   </div>
@@ -313,44 +314,46 @@
 
   <div class="plist2">
     <div class="keep"><p class="gh">Anti-infectives</p>
-      <div class="pc"><p class="pn">IDMOX-CV <span>Tab &middot; Dry Syp</span></p><p class="pcomp"><b>Tab:</b> Amoxycillin 500&nbsp;mg + Potassium Clavulanate 125&nbsp;mg</p><p class="pcomp"><b>Dry Syp:</b> Amoxycillin 200&nbsp;mg + Potassium Clavulanate 28.5&nbsp;mg per&nbsp;5&nbsp;ml</p></div></div>
-    <div class="pc"><p class="pn">IDCEF 200 DT <span>Tab &middot; Dry Syp</span></p><p class="pcomp"><b>Tab:</b> Cefixime 200&nbsp;mg (dispersible)</p><p class="pcomp"><b>Dry Syp:</b> Cefixime 50&nbsp;mg per&nbsp;5&nbsp;ml</p></div>
-    <div class="pc"><p class="pn">IDCEF-O <span>Tab</span></p><p class="pcomp">Cefixime 200&nbsp;mg + Ofloxacin 200&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">IDCEFPO <span>Tab &middot; Dry Syp</span></p><p class="pcomp"><b>Tab:</b> Cefpodoxime 100&nbsp;mg / 200&nbsp;mg</p><p class="pcomp"><b>Dry Syp:</b> Cefpodoxime 50&nbsp;mg per&nbsp;5&nbsp;ml</p></div>
-    <div class="pc"><p class="pn">IDFLOX-200 <span>Tab</span></p><p class="pcomp">Ofloxacin 200&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">IDFLOX-OZ <span>Tab</span></p><p class="pcomp">Ofloxacin 200&nbsp;mg + Ornidazole 500&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">ITRAID-200 <span>Cap</span></p><p class="pcomp">Itraconazole 200&nbsp;mg</p></div>
+      <div class="pc"><p class="pn">IDMOX-CV <span>Tab &middot; Dry Syrup</span></p><p class="pcomp"><b>Tab:</b> <span class="nb">Amoxycillin 500&nbsp;mg</span> + <span class="nb">Potassium Clavulanate 125&nbsp;mg</span></p><p class="pcomp"><b>Dry Syrup:</b> <span class="nb">Amoxycillin 200&nbsp;mg</span> + Potassium Clavulanate 28.5&nbsp;mg per&nbsp;5&nbsp;ml</p></div></div>
+    <div class="pc"><p class="pn">IDCEF <span>200 DT Tab &middot; Dry Syrup</span></p><p class="pcomp"><b>200 DT Tab:</b> <span class="nb">Cefixime 200&nbsp;mg (dispersible)</span></p><p class="pcomp"><b>Dry Syrup:</b> <span class="nb">Cefixime 50&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="pc"><p class="pn">IDCEF-O <span>Tab</span></p><p class="pcomp"><span class="nb">Cefixime 200&nbsp;mg</span> + <span class="nb">Ofloxacin 200&nbsp;mg</span></p></div>
+    <div class="pc"><p class="pn">IDCEFPO <span>Tab &middot; Dry Syrup</span></p><p class="pcomp"><b>Tab:</b> <span class="nb">Cefpodoxime 100&nbsp;mg / 200&nbsp;mg</span></p><p class="pcomp"><b>Dry Syrup:</b> <span class="nb">Cefpodoxime 50&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="pc"><p class="pn">IDFLOX-200 <span>Tab</span></p><p class="pcomp"><span class="nb">Ofloxacin 200&nbsp;mg</span></p></div>
+    <div class="pc"><p class="pn">IDFLOX-OZ <span>Tab</span></p><p class="pcomp"><span class="nb">Ofloxacin 200&nbsp;mg</span> + <span class="nb">Ornidazole 500&nbsp;mg</span></p></div>
+    <div class="pc"><p class="pn">ITRAID-200 <span>Cap</span></p><p class="pcomp"><span class="nb">Itraconazole 200&nbsp;mg</span></p></div>
 
     <div class="keep"><p class="gh">Gastro</p>
-      <div class="pc"><p class="pn">RIDAM-DSR <span>Cap</span></p><p class="pcomp">Rabeprazole 20&nbsp;mg&nbsp;(EC) + Domperidone 30&nbsp;mg&nbsp;(SR)</p></div></div>
-    <div class="pc"><p class="pn">RIDAM-ESR <span>Cap</span></p><p class="pcomp">Esomeprazole 40&nbsp;mg + Domperidone 30&nbsp;mg&nbsp;(SR)</p></div>
-    <div class="pc"><p class="pn">WOMI-MD <span>MD Tab</span></p><p class="pcomp">Ondansetron 4&nbsp;mg / 8&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">WOMI-G</p><p class="pcomp">Ondansetron</p></div>
-
-    <div class="keep"><p class="gh">Analgesics</p>
-      <div class="pc"><p class="pn">ASP <span>Tab</span></p><p class="pcomp">Aceclofenac 100&nbsp;mg + Paracetamol 325&nbsp;mg + Serratiopeptidase 15&nbsp;mg</p></div></div>
-    <div class="pc"><p class="pn">MITTHU-AP <span>Tab</span></p><p class="pcomp">Aceclofenac + Paracetamol</p></div>
-    <div class="pc"><p class="pn">MEFID-DS <span>Susp</span></p><p class="pcomp">Mefenamic Acid 100&nbsp;mg + Paracetamol 250&nbsp;mg per&nbsp;5&nbsp;ml</p></div>
-    <div class="pc"><p class="pn">OMG-GEL <span>Gel</span></p><p class="pcomp">Diclofenac Diethylamine 1.16% + Oleum Lini 3% + Methyl Salicylate 10% + Menthol 5% + Capsaicin 0.025%&nbsp;w/w</p></div>
-
-    <div class="keep"><p class="gh">Respiratory &amp; Anti-allergics</p>
-      <div class="pc"><p class="pn">LIVOID-M <span>Tab</span></p><p class="pcomp">Montelukast Sodium 10&nbsp;mg + Levocetirizine 5&nbsp;mg</p></div></div>
-    <div class="pc"><p class="pn">LIVOID <span>Tab</span></p><p class="pcomp">Levocetirizine 5&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">IDCUF-AX <span>Syrup</span></p><p class="pcomp">Ambroxol 15&nbsp;mg + Terbutaline 1.25&nbsp;mg + Guaiphenesin 50&nbsp;mg + Menthol 1&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">IDCUF-PLUS <span>Syrup</span></p><p class="pcomp">Dextromethorphan 15&nbsp;mg + Phenylephrine 5&nbsp;mg + Chlorpheniramine 2&nbsp;mg</p></div>
+      <div class="pc"><p class="pn">RIDAM-DSR <span>Cap</span></p><p class="pcomp"><span class="nb">Rabeprazole 20&nbsp;mg&nbsp;(EC)</span> + <span class="nb">Domperidone 30&nbsp;mg&nbsp;(SR)</span></p></div></div>
+    <div class="pc"><p class="pn">RIDAM-ESR <span>Cap</span></p><p class="pcomp"><span class="nb">Esomeprazole 40&nbsp;mg</span> + <span class="nb">Domperidone 30&nbsp;mg&nbsp;(SR)</span></p></div>
+    <div class="pc"><p class="pn">WOMI-MD <span>MD Tab</span></p><p class="pcomp"><span class="nb">Ondansetron 4&nbsp;mg / 8&nbsp;mg</span></p></div>
+    <div class="pc"><p class="pn">WOMI-G <span>Syrup</span></p><p class="pcomp"><span class="nb">Ondansetron 2&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
 
     <div class="keep"><p class="gh">Derma</p>
-      <div class="pc"><p class="pn">IMPROLAN-FC <span>Cream</span></p><p class="pcomp">Miconazole Nitrate + Fluocinolone Acetonide + Neomycin Sulphate</p></div></div>
+      <div class="pc"><p class="pn">IMPROLAN-FC <span>Cream</span></p><p class="pcomp"><span class="nb">Miconazole Nitrate</span> + <span class="nb">Fluocinolone Acetonide</span> + <span class="nb">Neomycin Sulphate</span></p></div></div>
 
-    <div class="keep"><p class="gh">Liver, Appetite &amp; Nutrition</p>
-      <div class="pc"><p class="pn">IDLIV-DS <span>Syrup &middot; Ayurvedic</span></p><p class="pcomp">Katuki, Kalmegh, Punarnava, Kasani, Kakamachi, Kakdasingi, Pippali, Elaichi</p></div></div>
-    <div class="pc"><p class="pn">IDCYP-PLUS <span>Syrup</span></p><p class="pcomp">Cyproheptadine 2&nbsp;mg + Tricholine Citrate 275&nbsp;mg</p></div>
-    <div class="pc"><p class="pn">IMPROVIT <span>Syrup</span></p><p class="pcomp">Ferric Ammonium Citrate + Vitamin B12 + Folic Acid + Zinc Sulphate + Pyridoxine</p></div>
+    <div class="keep colbreak"><p class="gh">Analgesics</p>
+      <div class="pc"><p class="pn">ASP <span>Tab</span></p><p class="pcomp"><span class="nb">Aceclofenac 100&nbsp;mg</span> + <span class="nb">Paracetamol 325&nbsp;mg</span> + <span class="nb">Serratiopeptidase 15&nbsp;mg</span></p></div></div>
+    <div class="pc"><p class="pn">MITTHU-AP <span>Tab</span></p><p class="pcomp"><span class="nb">Aceclofenac</span> + <span class="nb">Paracetamol</span></p></div>
+    <div class="pc"><p class="pn">MEFID-DS <span>Susp</span></p><p class="pcomp"><span class="nb">Mefenamic Acid 100&nbsp;mg</span> + <span class="nb">Paracetamol 250&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="pc"><p class="pn">OMG-GEL <span>Gel</span></p><p class="pcomp"><span class="nb">Diclofenac Diethylamine 1.16%</span> + <span class="nb">Oleum Lini 3%</span> + <span class="nb">Methyl Salicylate 10%</span> + <span class="nb">Menthol 5%</span> + <span class="nb">Capsaicin 0.025%&nbsp;w/w</span></p></div>
+
+    <div class="keep"><p class="gh">Respiratory &amp; Anti-allergics</p>
+      <div class="pc"><p class="pn">LIVOID-M <span>Tab</span></p><p class="pcomp"><span class="nb">Montelukast Sodium 10&nbsp;mg</span> + <span class="nb">Levocetirizine 5&nbsp;mg</span></p></div></div>
+    <div class="pc"><p class="pn">LIVOID <span>Tab</span></p><p class="pcomp"><span class="nb">Levocetirizine 5&nbsp;mg</span></p></div>
+    <div class="pc"><p class="pn">IDCUF-AX <span>Syrup</span></p><p class="pcomp"><span class="nb">Ambroxol 15&nbsp;mg</span> + <span class="nb">Terbutaline 1.25&nbsp;mg</span> + <span class="nb">Guaiphenesin 50&nbsp;mg</span> + <span class="nb">Menthol 1&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="pc"><p class="pn">IDCUF-PLUS <span>Syrup</span></p><p class="pcomp"><span class="nb">Dextromethorphan 15&nbsp;mg</span> + <span class="nb">Phenylephrine 5&nbsp;mg</span> + <span class="nb">Chlorpheniramine 2&nbsp;mg per&nbsp;5&nbsp;ml</span></p><p class="pcomp pwarn">Fixed Dose Combination shall not be used in children below four years of age.</p></div>
+
+    <div class="keep"><p class="gh">Appetite &amp; Nutrition</p>
+      <div class="pc"><p class="pn">IDCYP-PLUS <span>Syrup</span></p><p class="pcomp"><span class="nb">Cyproheptadine 2&nbsp;mg</span> + <span class="nb">Tricholine Citrate 275&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+      <div class="pc"><p class="pn">IMPROVIT <span>Syrup</span></p><p class="pcomp"><span class="nb">Ferric Ammonium Citrate</span> + <span class="nb">Cyanocobalamin</span> + <span class="nb">Pyridoxine</span> + <span class="nb">Folic Acid</span> + <span class="nb">Zinc Sulphate</span></p></div></div>
+
+    <div class="keep"><p class="gh">Ayurvedic</p>
+      <div class="pc"><p class="pn">IDLIV-DS <span>Syrup</span></p><p class="pcomp">Katuki, Kalmegh, Punarnava, Kasani, Kakamachi, Kakdasingi, Pippali, Elaichi</p></div></div>
   </div>
 
-  <div class="plfoot">
-    <p>Full prescribing information available on request.<br>Product information as on October 2026.</p>
-    <p><b>IMPROVIT</b>: see the back cover &rarr;</p>
+  <div class="plfoot hinge">
+    <p>Full prescribing information available on request.</p>
+    <p><b>IMPROVIT</b>: see the back cover</p>
   </div>
 </div></div>
 </section>
@@ -362,6 +365,7 @@
 <div class="bleedbox"><div class="trim">
   <div class="bar"><span class="r"></span><span class="o"></span></div>
   <p class="rmp" style="position:absolute;top:6.4mm;left:9mm;right:9mm">For the use only of registered medical practitioners or a hospital or a laboratory</p>
+  <img class="ty-logo" src="idma-logo.png" alt="IDMA Pharma">
   <div class="ty">
     <h2>Thank you, <em>Doctor.</em></h2>
     <p>For the care you give every patient, every day.</p>
@@ -372,8 +376,8 @@
       <p class="q">Last page of your pad?</p>
       <p class="s">WhatsApp us or call your IDMA representative and we will send a new pad.</p>
       <div class="kv">
-        <span>IDMA representative</span><span>Representative's name &middot; +91 XXXXX XXXXX</span>
-        <span>Kanpur stockist</span><span>Stockist name, Area &middot; +91 XXXXX XXXXX</span>
+        <span>IDMA representative</span><span class="wl"></span>
+        <span>Stockist</span><span class="wl"></span>
         <span>WhatsApp</span><span>+91 63878 78493</span>
       </div>
     </div>
@@ -382,27 +386,31 @@
 
   <p class="spot-h">From the IDMA range</p>
   <div class="spot">
-    <div class="card"><p class="pn">IDMOX-CV</p><p class="pcomp">Amoxycillin 500&nbsp;mg + Potassium Clavulanate 125&nbsp;mg</p></div>
-    <div class="card"><p class="pn">IDCEFPO</p><p class="pcomp">Cefpodoxime 100&nbsp;mg / 200&nbsp;mg &middot; Dry Syp 50&nbsp;mg per&nbsp;5&nbsp;ml</p></div>
-    <div class="card"><p class="pn">IDCEF-O</p><p class="pcomp">Cefixime 200&nbsp;mg + Ofloxacin 200&nbsp;mg</p></div>
-    <div class="card"><p class="pn">RIDAM-DSR</p><p class="pcomp">Rabeprazole 20&nbsp;mg&nbsp;(EC) + Domperidone 30&nbsp;mg&nbsp;(SR)</p></div>
-    <div class="card"><p class="pn">ASP</p><p class="pcomp">Aceclofenac 100&nbsp;mg + Paracetamol 325&nbsp;mg + Serratiopeptidase 15&nbsp;mg</p></div>
-    <div class="card"><p class="pn">LIVOID-M</p><p class="pcomp">Montelukast Sodium 10&nbsp;mg + Levocetirizine 5&nbsp;mg</p></div>
-    <div class="card"><p class="pn">IDCUF-AX</p><p class="pcomp">Ambroxol 15&nbsp;mg + Terbutaline 1.25&nbsp;mg + Guaiphenesin 50&nbsp;mg + Menthol 1&nbsp;mg</p></div>
-    <div class="card"><p class="pn">IDCYP-PLUS</p><p class="pcomp">Cyproheptadine 2&nbsp;mg + Tricholine Citrate 275&nbsp;mg</p></div>
-    <div class="card"><p class="pn">IDFLOX-OZ</p><p class="pcomp">Ofloxacin 200&nbsp;mg + Ornidazole 500&nbsp;mg</p></div>
-    <div class="card"><p class="pn">WOMI-MD</p><p class="pcomp">Ondansetron 4&nbsp;mg / 8&nbsp;mg</p></div>
+    <div class="card"><p class="pn">IDMOX-CV</p><p class="pcomp"><b>Tab:</b> <span class="nb">Amoxycillin 500&nbsp;mg</span> + <span class="nb">Potassium Clavulanate 125&nbsp;mg</span></p></div>
+    <div class="card"><p class="pn">IDCEFPO</p><p class="pcomp"><b>Tab:</b> <span class="nb">Cefpodoxime 100&nbsp;mg / 200&nbsp;mg</span><br><b>Dry Syrup:</b> <span class="nb">50&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="card"><p class="pn">IDCEF-O</p><p class="pcomp"><span class="nb">Cefixime 200&nbsp;mg</span> + <span class="nb">Ofloxacin 200&nbsp;mg</span></p></div>
+    <div class="card"><p class="pn">RIDAM-DSR</p><p class="pcomp"><span class="nb">Rabeprazole 20&nbsp;mg&nbsp;(EC)</span> + <span class="nb">Domperidone 30&nbsp;mg&nbsp;(SR)</span></p></div>
+    <div class="card"><p class="pn">ASP</p><p class="pcomp"><span class="nb">Aceclofenac 100&nbsp;mg</span> + <span class="nb">Paracetamol 325&nbsp;mg</span> + <span class="nb">Serratiopeptidase 15&nbsp;mg</span></p></div>
+    <div class="card"><p class="pn">LIVOID-M</p><p class="pcomp"><span class="nb">Montelukast Sodium 10&nbsp;mg</span> + <span class="nb">Levocetirizine 5&nbsp;mg</span></p></div>
+    <div class="card"><p class="pn">IDCUF-AX</p><p class="pcomp"><span class="nb">Ambroxol 15&nbsp;mg</span> + <span class="nb">Terbutaline 1.25&nbsp;mg</span> + <span class="nb">Guaiphenesin 50&nbsp;mg</span> + <span class="nb">Menthol 1&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="card"><p class="pn">IDCYP-PLUS</p><p class="pcomp"><span class="nb">Cyproheptadine 2&nbsp;mg</span> + <span class="nb">Tricholine Citrate 275&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="card"><p class="pn">IDFLOX-OZ</p><p class="pcomp"><span class="nb">Ofloxacin 200&nbsp;mg</span> + <span class="nb">Ornidazole 500&nbsp;mg</span></p></div>
+    <div class="card"><p class="pn">WOMI-MD</p><p class="pcomp"><b>MD Tab:</b> <span class="nb">Ondansetron 4&nbsp;mg / 8&nbsp;mg</span></p></div>
+    <div class="card"><p class="pn">IDCEF</p><p class="pcomp"><b>200 DT Tab:</b> <span class="nb">Cefixime 200&nbsp;mg</span><br><b>Dry Syrup:</b> <span class="nb">50&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div class="card"><p class="pn">ITRAID-200</p><p class="pcomp"><b>Cap:</b> <span class="nb">Itraconazole 200&nbsp;mg</span></p></div>
   </div>
 
   <div class="plfoot">
-    <p>Creating &amp; caring for a better life &middot; IDMA Pharma</p>
+    <p>Full prescribing information available on request &middot; IDMA Pharma</p>
     <p>Product information as on October 2026</p>
   </div>
 </div></div>
 </section>
 
 <!-- =====================================================================
-     PAGE 4 · BACK COVER (outside) · IMPROVIT + company details
+     PAGE 4 · BACK COVER (outside) · IMPROVIT reminder + company details
+     Reminder layout (brand, generic names, packs): no indications or ingredient claims until the
+     approved label/insert gives dosage, contraindications and side effects (UCPMP 3.2).
      IMPROVIT strengths not printed: catalogue values are garbled. Add from the label.
      ===================================================================== -->
 <section class="sheet" aria-label="Page 4: back cover, IMPROVIT">
@@ -412,49 +420,21 @@
   <img class="iv-logo" src="idma-logo.png" alt="IDMA Pharma">
   <p class="iv-eyebrow">Haematinic syrup</p>
   <p class="iv-name">IMPROVIT</p>
+  <p class="iv-ing">Ferric Ammonium Citrate + Cyanocobalamin + Pyridoxine + Folic Acid + Zinc Sulphate</p>
   <p class="iv-tag">Rewarding iron therapy</p>
-  <p class="iv-ing">Iron + Vitamin B12 + Folic Acid<br>+ Zinc + Vitamin B6</p>
-  <div class="iv-form"><span>Syrup 100 ml</span><span>Syrup 200 ml</span></div>
 
-  <svg class="iv-art" viewBox="0 0 52 62" aria-hidden="true">
-    <g>
-      <circle cx="8" cy="14" r="6.5" fill="#d7263d"/><circle cx="8" cy="14" r="3.4" fill="#e85a68"/>
-      <circle cx="45" cy="9" r="5" fill="#d7263d"/><circle cx="45" cy="9" r="2.6" fill="#e85a68"/>
-      <circle cx="46" cy="40" r="6" fill="#c8102e"/><circle cx="46" cy="40" r="3.1" fill="#e04456"/>
-      <circle cx="6" cy="44" r="4.6" fill="#c8102e"/><circle cx="6" cy="44" r="2.4" fill="#e04456"/>
-      <circle cx="41" cy="55" r="3.6" fill="#d7263d"/><circle cx="41" cy="55" r="1.9" fill="#e85a68"/>
-    </g>
-    <rect x="18.5" y="3" width="15" height="6.5" rx="1.4" fill="#c8102e"/>
-    <rect x="20.5" y="9" width="11" height="6" fill="#6e2e0e"/>
-    <path d="M17 15h18a3 3 0 0 1 3 3v38a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V18a3 3 0 0 1 3-3z" fill="#8a3b12"/>
-    <rect x="16.3" y="18" width="1.8" height="38" rx=".9" fill="#a8521f"/>
-    <rect x="16" y="27" width="20" height="23" rx="1.6" fill="#fff"/>
-    <rect x="16" y="27" width="20" height="3.2" rx="1" fill="#f07c13"/>
-    <text x="26" y="36.4" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="3.9" fill="#a3121f">IMPROVIT</text>
-    <text x="26" y="40.6" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="2" fill="#1a1a1a">Iron &#183; B12 &#183; Folic Acid</text>
-    <text x="26" y="43.4" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="2" fill="#1a1a1a">Zinc &#183; Vitamin B6</text>
-    <text x="26" y="47.6" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="2.3" fill="#f07c13">SYRUP</text>
-  </svg>
+  <div class="iv-glow"></div>
+  <div class="iv-shadow"></div>
+  <img class="iv-hero" src="improvit-bottle.png" alt="IMPROVIT syrup bottle with flexing arms">
+  <div class="iv-pack l"><b>Syrup</b><span>100 ml</span></div>
+  <div class="iv-pack r"><b>Syrup</b><span>200 ml</span></div>
 
-  <div class="iv-roles">
-    <div><b>Iron</b><span>Ferric ammonium citrate replenishes iron for haemoglobin</span></div>
-    <div><b>Vitamin B12 + Folic Acid</b><span>Support healthy red blood cell formation</span></div>
-    <div><b>Zinc</b><span>Supports immunity and growth</span></div>
-    <div><b>Vitamin B6</b><span>Aids haemoglobin synthesis</span></div>
-  </div>
-
-  <div class="iv-ind">
-    <p>Useful in</p>
-    <div><span>Iron-deficiency anaemia</span><span>Pregnancy &amp; lactation</span><span>Recovery after illness or surgery</span></div>
-  </div>
-
-  <div class="iv-comp"><b>Each 10 ml contains:</b> Ferric Ammonium Citrate, Cyanocobalamin (Vitamin B12), Folic Acid, Zinc Sulphate, Pyridoxine Hydrochloride (Vitamin B6), in a sorbitol base.</div>
   <p class="iv-date">Full prescribing information available on request &middot; Product information as on October 2026</p>
   <div class="iv-also">
     <p>Also from IDMA</p>
-    <div><p class="pn">IDCYP-PLUS</p><p class="pcomp">Cyproheptadine 2&nbsp;mg + Tricholine Citrate 275&nbsp;mg</p></div>
-    <div><p class="pn">IDLIV-DS</p><p class="pcomp">Ayurvedic liver tonic: Katuki, Kalmegh, Punarnava &amp; more</p></div>
-    <div><p class="pn">MEFID-DS</p><p class="pcomp">Mefenamic Acid 100&nbsp;mg + Paracetamol 250&nbsp;mg per&nbsp;5&nbsp;ml</p></div>
+    <div><p class="pn">IDCYP-PLUS <span>Syrup</span></p><p class="pcomp"><span class="nb">Cyproheptadine 2&nbsp;mg</span> + <span class="nb">Tricholine Citrate 275&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
+    <div><p class="pn">IDLIV-DS <span>Ayurvedic</span></p><p class="pcomp">Katuki, Kalmegh, Punarnava, Kasani, Kakamachi, Kakdasingi, Pippali, Elaichi</p></div>
+    <div><p class="pn">MEFID-DS <span>Susp</span></p><p class="pcomp"><span class="nb">Mefenamic Acid 100&nbsp;mg</span> + <span class="nb">Paracetamol 250&nbsp;mg per&nbsp;5&nbsp;ml</span></p></div>
   </div>
 
   <div class="contact-band iv">
@@ -463,7 +443,7 @@
       <div class="row"><svg viewBox="0 0 24 24" fill="#1fa855" aria-hidden="true"><path d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0Zm0 21.785a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.450 4.436-9.884 9.888-9.884 5.45 0 9.884 4.434 9.881 9.892-.003 5.45-4.437 9.884-9.889 9.884Zm5.422-7.403c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.040 1.016-1.040 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347Z"/></svg> WhatsApp / Call: +91 63878 78493</div>
       <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd2a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> id@idmapharma.com &nbsp;&middot;&nbsp; www.idmapharma.com</div>
       <div class="row addr">IDMA Pharma, Rishi House, Maninagar, Ahmedabad, Gujarat 380008</div>
-      <p class="scan">Scan the code for our product list on WhatsApp &rarr;</p>
+      <p class="scan">Scan the code for our product list on WhatsApp</p>
     </div>
     <img class="qr" src="qr-whatsapp.svg" alt="QR code: WhatsApp IDMA Pharma for the product list">
   </div>
@@ -547,6 +527,7 @@
   window.printMode = function () {
     document.documentElement.classList.add('print');
     var names = ['Page 1: front cover outside, 4-colour', 'Page 2: front cover inside, 4-colour', 'Page 3: back cover inside, 4-colour', 'Page 4: back cover outside, 4-colour', 'Rx leaf, 2 inks: PMS 186 U + Black'];
+    var notes = ['Crease 10 mm from the head', 'PRINT HEAD-TO-FOOT to page 1 (tumble) &middot; crease 10 mm from page-1 head', 'HEAD-TO-HEAD with page 4 (work-and-turn)', 'HEAD-TO-HEAD with page 3 (work-and-turn)', ''];
     var sample = [false, true, true, true, false];
     var st = document.createElement('style');
     st.textContent = '@page { size: 168mm 230mm; margin: 0; }';
@@ -559,8 +540,8 @@
       ].map(function (l) { return '<line x1="' + l[0] + '" y1="' + l[1] + '" x2="' + l[2] + '" y2="' + l[3] + '"/>'; }).join('');
       sh.insertAdjacentHTML('beforeend',
         '<svg class="marks" viewBox="0 0 168 230" aria-hidden="true"><g stroke="#000" stroke-width=".1">' + lines + '</g></svg>' +
-        '<p class="slug">IDMA Pharma Rx pad &middot; ' + names[i] + ' &middot; Trim 148 &times; 210 mm (A5) &middot; Bleed 3 mm' +
-        (sample[i] ? ' &middot; <b>CHECK EVERY COMPOSITION AGAINST THE PACK LABEL BEFORE PRESS</b>' : '') + '</p>');
+        '<p class="slug">IDMA Pharma Rx pad &middot; ' + names[i] + ' &middot; Trim 148 &times; 210 mm (A5) &middot; Bleed 3 mm<br>' + notes[i] +
+        (sample[i] ? (notes[i] ? ' &middot; ' : '') + '<b>CHECK EVERY COMPOSITION AGAINST THE PACK LABEL BEFORE PRESS</b>' : '') + '</p>');
     });
   };
 </script>
