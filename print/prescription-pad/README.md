@@ -9,7 +9,7 @@ Kept on this branch only: if it were merged to `main`, GitHub Pages would publis
 | 2 | Front cover, inside | Full product list: brand with composition below |
 | 3 | Back cover, inside | Thank-you, new-pad reorder (write-in lines for rep and stockist, QR), 12 highlighted products |
 | 4 | Back cover, outside | IMPROVIT reminder with the bottle creative (`improvit-bottle.png`), 3 more products, company details |
-| Leaf | Prescription sheet | Doctor block, patient name/age/date/address, Rx, light IDMA watermark (12% red screen), signature, IDMA motto footer; 100 per pad, 2 inks, personalised per doctor (separate PDF) |
+| Leaf | Prescription sheet | Patient name and address, Rx, light IDMA watermark (12% red screen), signature & stamp box, Mitthu Range "Create With Care" footer; 100 per pad, 2 inks, same leaf for every doctor (separate PDF) |
 
 Compositions come from IDMA's catalogue (Oct 2026) with IDMA's corrections. **Check every line against
 the approved pack label before printing.** Strengths are still missing for MITTHU-AP, IMPROLAN-FC
