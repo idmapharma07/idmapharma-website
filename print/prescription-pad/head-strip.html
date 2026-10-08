@@ -16,8 +16,13 @@
   Build: node build/strip.js <tmp-dir>  (previews, 3D mock-up, printer's PDF with crop and fold marks)
 -->
 <style>
-  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-var.woff2) format("woff2"); font-weight: 200 800; font-style: normal; }
-  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-italic-var.woff2) format("woff2"); font-weight: 200 800; font-style: italic; }
+/* static TTFs (from the variable font, build: fonts/static) so PDFs embed real fonts: text stays editable in CorelDRAW */
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-Regular.ttf) format("truetype"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-Medium.ttf) format("truetype"); font-weight: 500; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-SemiBold.ttf) format("truetype"); font-weight: 600; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-Bold.ttf) format("truetype"); font-weight: 700; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-ExtraBold.ttf) format("truetype"); font-weight: 800; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-MediumItalic.ttf) format("truetype"); font-weight: 200 800; font-style: italic; }
   :root {
     --red: #c8102e; --red-dk: #a30d25; --red-tint: #fbe1e4; --orange: #f07c13; --peach: #ffd2a6;
     --navy: #0c1f33; --iv: #a3121f; --text: #1a1a1a; --grey: #555;

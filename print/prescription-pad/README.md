@@ -25,6 +25,7 @@ indications or ingredient claims) until the IMPROVIT label gives dosage, contrai
 - `coreldraw/`: every page as its own vector PDF and SVG (text as curves) for CorelDRAW; see `coreldraw/README.txt`
 - `IDMA-Rx-pad-LEAF-A5.pdf`: the prescription leaf
 - `IDMA-Rx-pad-printer-job-ticket.pdf`: stock, binding, colours and open items for the printer
+- `fonts/static/`: Plus Jakarta Sans as static TTFs (made from the variable font; SIL OFL, see `OFL.txt`). The artwork uses these so PDFs embed real TrueType fonts and the text stays editable in CorelDRAW
 - `prescription-pad.html`, `printer-job-ticket.html`: editable sources; `improvit-bottle.png`: IMPROVIT creative (supplied by IDMA)
 - `1-front-cover.png` ... `5-prescription-leaf.png`: page previews
 

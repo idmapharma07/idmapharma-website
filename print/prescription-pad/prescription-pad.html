@@ -15,8 +15,13 @@
   Check every composition against the approved pack label before press.
 -->
 <style>
-  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-var.woff2) format("woff2"); font-weight: 200 800; font-style: normal; }
-  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-italic-var.woff2) format("woff2"); font-weight: 200 800; font-style: italic; }
+/* static TTFs (from the variable font, build: fonts/static) so PDFs embed real fonts: text stays editable in CorelDRAW */
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-Regular.ttf) format("truetype"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-Medium.ttf) format("truetype"); font-weight: 500; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-SemiBold.ttf) format("truetype"); font-weight: 600; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-Bold.ttf) format("truetype"); font-weight: 700; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-ExtraBold.ttf) format("truetype"); font-weight: 800; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/static/PlusJakartaSans-MediumItalic.ttf) format("truetype"); font-weight: 200 800; font-style: italic; }
 
   :root {
     --red:      #c8102e;   /* PMS 186 / C0 M100 Y85 K5 */
