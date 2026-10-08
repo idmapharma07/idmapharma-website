@@ -22,6 +22,7 @@ indications or ingredient claims) until the IMPROVIT label gives dosage, contrai
 - `IDMA-Rx-pad-COVERS-PROOF-A5.pdf`: the 4 cover pages for approval (not for press)
 - `IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf`: covers layout for the printer, 3 mm bleed, crop marks, TrimBox/BleedBox (RGB: convert or re-set before plating)
 - `IDMA-Rx-pad-HEAD-STRIP-RGB-LAYOUT-bleed-cropmarks.pdf`: head strip for the printer (crop and fold marks); `6-head-strip*.png`: strip previews and mock-up
+- `coreldraw/`: every page as its own vector PDF and SVG (text as curves) for CorelDRAW; see `coreldraw/README.txt`
 - `IDMA-Rx-pad-LEAF-A5.pdf`: the prescription leaf
 - `IDMA-Rx-pad-printer-job-ticket.pdf`: stock, binding, colours and open items for the printer
 - `prescription-pad.html`, `printer-job-ticket.html`: editable sources; `improvit-bottle.png`: IMPROVIT creative (supplied by IDMA)
@@ -35,6 +36,7 @@ python3 build/set-pdf-boxes.py <tmp-dir>/print-raw.pdf IDMA-Rx-pad-COVERS-RGB-LA
 node build/strip.js <tmp-dir>           # head strip previews, mock-up, raw strip PDF
 python3 build/set-pdf-boxes.py <tmp-dir>/strip-raw.pdf IDMA-Rx-pad-HEAD-STRIP-RGB-LAYOUT-bleed-cropmarks.pdf "IDMA Pharma Rx pad - head strip"
 node build/ticket.js                    # job ticket PDF
+python3 build/split-for-coreldraw.py    # one PDF + SVG per page in coreldraw/ (needs pymupdf)
 ```
 
 Needs Playwright (Chromium) and `pypdf`.
