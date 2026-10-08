@@ -10,7 +10,7 @@
     2  Front cover, inside    product list (brand + composition)
     3  Back cover, inside     thank-you + new-pad reorder + product spotlight (seen when the pad is used up)
     4  Back cover, outside    IMPROVIT promotion + company details
-    5  Prescription leaf      2 inks (PMS 186 U + black), 70 GSM maplitho, 100 per pad; rendered as a separate PDF
+    5  Prescription leaf      2 inks (PMS 186 U + black), 70 GSM maplitho, 100 per pad; IDMA watermark as a light red screen; separate PDF
   Compositions come from the IDMA catalogue (Oct 2026) with the client's corrections.
   Check every composition against the approved pack label before press.
 -->
@@ -134,42 +134,39 @@
   .back-band .ask { font-size: 9pt; font-weight: 800; line-height: 1.2; margin-bottom: 1.2mm; }
   .back-band .ask em { font-style: normal; color: var(--peach); }
 
-  /* ---------- 3. PRESCRIPTION LEAF (2 inks: red + black) ---------- */
-  .leaf { --text: #000; --grey: #4d4d4d; --line: #999999; --rule: #b3b3b3; }
-  .rx { position: absolute; left: 8mm; right: 8mm; top: 10mm; bottom: 12.5mm; display: flex; flex-direction: column; }   /* top 10 mm blank for padding gum */
-  .doc { display: flex; justify-content: space-between; gap: 5mm; padding-bottom: 2.4mm; border-bottom: .6mm solid var(--red); }
-  .doc .name { font-size: 15pt; font-weight: 800; color: #000; line-height: 1.1; letter-spacing: -.01em; }
-  .doc .deg  { font-size: 7.8pt; font-weight: 700; color: #000; margin-top: .9mm; }
-  .doc .spec { font-size: 7.2pt; font-weight: 500; color: #000; margin-top: .4mm; }
-  .doc .reg  { font-size: 7.2pt; font-weight: 700; color: #000; margin-top: .8mm; }
+  /* ---------- 5. PRESCRIPTION LEAF (2 inks: PMS 186 U red + black) ---------- */
+  .leaf { --text: #000; --grey: #4d4d4d; --line: #8c8c8c; --rule: #b3b3b3; }
+  .rx { position: absolute; left: 9mm; right: 9mm; top: 10mm; bottom: 14mm; display: flex; flex-direction: column; }   /* top 10 mm blank for padding gum */
+  .doc { display: flex; justify-content: space-between; align-items: flex-end; gap: 5mm; padding: 1.2mm 0 2.6mm; border-bottom: .6mm solid var(--red); }
+  .doc .name { font-size: 17pt; font-weight: 800; color: #000; line-height: 1.05; letter-spacing: -.01em; }
+  .doc .deg  { font-size: 7.8pt; font-weight: 700; color: #000; margin-top: 1.3mm; }
+  .doc .reg  { font-size: 7.2pt; font-weight: 600; color: #000; margin-top: .6mm; }
   .doc .clinic { text-align: right; font-size: 7pt; line-height: 1.45; color: #000; }
   .doc .clinic b { display: block; font-size: 8.4pt; font-weight: 800; }
   .doc .clinic .t { font-weight: 700; }
 
-  .grid { display: grid; gap: 3mm; margin-top: 3.4mm; }
-  .g1 { grid-template-columns: 1fr 33mm 39mm; margin-top: 4mm; }
-  .g2 { grid-template-columns: 1fr 34mm 38mm; }
-  .g3 { grid-template-columns: repeat(5, 1fr); }
-  .field { font-size: 7pt; font-weight: 700; color: #000; display: flex; align-items: flex-end; gap: 1.2mm; white-space: nowrap; }
+  .pt { display: grid; column-gap: 4mm; }
+  .pt.r1 { grid-template-columns: 1fr 29mm 37mm; margin-top: 5mm; }
+  .pt.r2 { grid-template-columns: 1fr 24mm; margin-top: 3.8mm; }
+  .field { font-size: 7.2pt; font-weight: 700; color: #000; display: flex; align-items: flex-end; gap: 1.2mm; white-space: nowrap; }
   .field::after { content: ""; flex: 1; border-bottom: .18mm solid var(--line); height: 3.4mm; }
+  .field.big { font-size: 8.4pt; font-weight: 800; }
   .field small { order: 3; font-size: 6.6pt; color: var(--grey); font-weight: 600; }
-  .field .opt { order: 3; font-size: 6.8pt; font-weight: 600; color: var(--grey); letter-spacing: .04em; }
+  .field .opt  { order: 3; font-size: 6.8pt; font-weight: 600; color: var(--grey); letter-spacing: .04em; }
   .field .date { order: 3; font-size: 7pt; font-weight: 600; color: var(--grey); letter-spacing: .06em; }
-  .g3 .field { font-weight: 600; }
   .field.plain::after { display: none; }
 
-  .body { flex: 1; display: grid; grid-template-columns: 34mm 1fr; margin-top: 3.2mm; border-top: .18mm solid var(--rule); }
-  .notes { border-right: .18mm solid var(--rule); padding: 2.4mm 2.6mm 0 0; display: flex; flex-direction: column; }
-  .notes div { font-size: 6.8pt; font-weight: 700; color: #000; letter-spacing: .04em; }
-  .notes div + div { border-top: .18mm solid var(--rule); padding-top: 1.6mm; }
-  .notes .n1, .notes .n2 { flex: 3; } .notes .n3 { flex: 1.5; } .notes .n4 { flex: 2; }
-  .rxarea { padding: 1.4mm 0 0 4mm; }
-  .rxarea svg { width: 9.5mm; height: 9.5mm; display: block; }
+  .writing { flex: 1; position: relative; margin-top: 4mm; border-top: .18mm solid var(--rule); }
+  .rxsym { position: absolute; left: 0; top: 3mm; width: 13mm; height: 13mm; display: block; }
+  /* IDMA watermark: one ink, a light screen of PMS 186 U (oval 12 %, swoosh 6 %, letters paper white) so handwriting stays clear */
+  .wm { position: absolute; left: 50%; top: 46%; width: 104mm; height: auto; transform: translate(-50%, -50%); }
+  .wm .o { fill: #fcf1f2; } .wm .r { fill: #f8e2e6; } .wm text { fill: #fff; font-family: var(--font); }
 
-  .closing { display: grid; grid-template-columns: 1fr 50mm; gap: 5mm; border-top: .18mm solid var(--rule); padding-top: 3mm; height: 27mm; }
-  .closing .left { display: flex; flex-direction: column; gap: 3.2mm; }
-  .sign { border: .18mm solid var(--line); border-radius: 1.2mm; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1.4mm; font-size: 6.8pt; font-weight: 700; color: var(--grey); height: 22mm; }
-  .rx-foot { position: absolute; left: 8mm; right: 8mm; bottom: 6mm; display: flex; justify-content: flex-end; font-size: 6.6pt; font-weight: 600; color: var(--red); }
+  .closing { display: flex; justify-content: space-between; align-items: flex-end; gap: 6mm; padding-top: 2mm; }
+  .closing .field { width: 60mm; }
+  .sign { width: 56mm; border-top: .2mm solid var(--line); text-align: center; padding-top: 1.2mm; font-size: 7pt; font-weight: 700; color: var(--grey); }
+  .rx-foot { position: absolute; left: 9mm; right: 9mm; bottom: 6.5mm; border-top: .25mm solid var(--red); padding-top: 1.5mm; display: flex; justify-content: space-between; align-items: baseline; font-size: 7pt; font-weight: 700; color: var(--red); }
+  .rx-foot i { font-weight: 600; font-style: italic; }
 
   /* ---------- v3: cover set (1 front, 2 inside front, 3 inside back, 4 outside back) ---------- */
   .cover-head { position: absolute; top: 43mm; width: 100%; text-align: center; color: #fff; font-size: 27pt; font-weight: 800; line-height: 1.05; letter-spacing: -.015em; }
@@ -453,7 +450,7 @@
 
 <!-- =====================================================================
      PAGE 5 · PRESCRIPTION LEAF (separate file for the printer) (100 per pad)
-     Two inks only: PMS 186 U red (rule, Rx, courtesy line) + black (everything else).
+     Two inks only: PMS 186 U red (rule, Rx, watermark screen, footer) + black (everything else).
      Only the doctor block changes per doctor, and it sits on the black plate.
      Top 10 mm stays blank for the padding gum.
      ===================================================================== -->
@@ -463,8 +460,7 @@
     <div class="doc">
       <div>
         <p class="name">Dr. Doctor's Name</p>
-        <p class="deg">MBBS, MD (General Medicine)</p>
-        <p class="spec">Consultant Physician</p>
+        <p class="deg">MBBS, MD (General Medicine) &middot; Consultant Physician</p>
         <p class="reg">Regn. No.: XXXXX (U.P. Medical Council)</p>
       </div>
       <div class="clinic">
@@ -472,53 +468,42 @@
         Clinic address line, Area<br>
         Kanpur, Uttar Pradesh 2080XX<br>
         Ph: +91 XXXXX XXXXX<br>
-        <span class="t">Timings:</span> 10 am–2 pm &amp; 5–8 pm<br>
-        <span class="t">Closed:</span> Sunday
+        <span class="t">Timings:</span> 10 am&ndash;2 pm &amp; 5&ndash;8 pm
       </div>
     </div>
 
-    <div class="grid g1">
-      <span class="field">Name</span>
+    <div class="pt r1">
+      <span class="field big">Patient name</span>
       <span class="field">Age/Sex<span class="opt">M / F</span></span>
       <span class="field plain">Date<span class="date">&nbsp;___ / ___ / 20___</span></span>
     </div>
-    <div class="grid g2">
+    <div class="pt r2">
       <span class="field">Address</span>
-      <span class="field">Mob.</span>
-      <span class="field">Drug allergy</span>
-    </div>
-    <div class="grid g3">
       <span class="field">Wt<small>kg</small></span>
-      <span class="field">BP<small>mmHg</small></span>
-      <span class="field">Pulse<small>/min</small></span>
-      <span class="field">Temp<small>&deg;F</small></span>
-      <span class="field"><span>SpO<sub style="font-size:5pt;line-height:0">2</sub></span><small>%</small></span>
     </div>
 
-    <div class="body">
-      <div class="notes">
-        <div class="n1">Complaints</div>
-        <div class="n2">Examination</div>
-        <div class="n3">Diagnosis</div>
-        <div class="n4">Investigations</div>
-      </div>
-      <div class="rxarea">
-        <!-- Rx symbol drawn as a path so it does not depend on a font glyph -->
-        <svg viewBox="0 0 40 40" aria-label="Rx"><g fill="none" stroke="#c8102e" stroke-width="3.4" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 34V5h10a7.5 7.5 0 0 1 0 15H9"/><path d="M17 20l16 16"/><path d="M23 36l10-10"/></g></svg>
-      </div>
+    <div class="writing">
+      <!-- IDMA logo redrawn as one-ink vector (from the supplied PNG); swap in the vector logo when IDMA sends it -->
+      <svg class="wm" viewBox="0 0 225 112" aria-hidden="true">
+        <g transform="rotate(-5 112.5 56)">
+          <ellipse class="o" cx="119" cy="51.5" rx="101.5" ry="49.5"/>
+          <ellipse class="o" cx="108.5" cy="59.5" rx="100.5" ry="49.5"/>
+          <ellipse class="r" cx="112.5" cy="56.5" rx="100" ry="50"/>
+        </g>
+        <text x="36" y="77.5" textLength="150" lengthAdjust="spacingAndGlyphs" font-size="60" font-weight="700">Idma</text>
+        <text x="61" y="95.8" textLength="87" lengthAdjust="spacingAndGlyphs" font-size="19.5" font-weight="600">PHARMA</text>
+      </svg>
+      <!-- Rx symbol drawn as a path so it does not depend on a font glyph -->
+      <svg class="rxsym" viewBox="0 0 40 40" aria-label="Rx"><g fill="none" stroke="#c8102e" stroke-width="3.4" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 34V5h10a7.5 7.5 0 0 1 0 15H9"/><path d="M17 20l16 16"/><path d="M23 36l10-10"/></g></svg>
     </div>
 
     <div class="closing">
-      <div class="left">
-        <span class="field">Advice</span>
-        <span class="field">&nbsp;</span>
-        <span class="field plain">Next visit<span class="date">&nbsp;___ / ___ / 20___</span></span>
-      </div>
+      <span class="field plain">Next visit<span class="date">&nbsp;___ / ___ / 20___</span></span>
       <div class="sign">Signature &amp; Stamp</div>
     </div>
   </div>
 
-  <div class="rx-foot">Courtesy: IDMA Pharma, Ahmedabad</div>
+  <div class="rx-foot"><i>Creating &amp; caring for a better life</i><span>Courtesy: IDMA Pharma</span></div>
 </div></div>
 </section>
 
