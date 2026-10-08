@@ -5,27 +5,30 @@ Kept on this branch only: if it were merged to `main`, GitHub Pages would publis
 
 | Page | Face | Content |
 |---|---|---|
-| 1 | Front cover, outside | Logo, motto, IDMA values, product forms, segments, contact, WhatsApp QR |
-| 2 | Front cover, inside | Product list 1 of 2 (brand, composition, form) |
-| 3 | Prescription leaf | 100 per pad, personalised per doctor, 2 inks (PMS 186 U + black) |
-| 4 | Back cover, outside | Product list 2 of 2, Kanpur representative and stockist, contact |
+| 1 | Front cover, outside | IDMA promotion: "Medicines you can trust", motto, values, range, contact, WhatsApp QR |
+| 2 | Front cover, inside | Full product list: brand with composition below |
+| 3 | Back cover, inside | Thank-you, new-pad reorder (Kanpur rep/stockist, QR), highlighted products |
+| 4 | Back cover, outside | IMPROVIT promotion, 3 more products, company details |
+| Leaf | Prescription sheet | 100 per pad, 2 inks, personalised per doctor (separate PDF) |
 
-**The product list is sample data.** Every brand name and composition on pages 2 and 4 must be
-replaced with IDMA's own licensed products, copied from the approved labels, before printing.
+Compositions come from IDMA's catalogue (Oct 2026) with IDMA's corrections. **Check every line against
+the approved pack label before printing.** Strengths are still missing for MITTHU-AP, WOMI-G,
+IMPROLAN-FC and IMPROVIT.
 
 ## Files
 
-- `IDMA-Rx-pad-PROOF-A5.pdf`: A5 proof for approval (not for press)
-- `IDMA-Rx-pad-PRINT-bleed-cropmarks.pdf`: press file, 3 mm bleed, crop marks, TrimBox/BleedBox
+- `IDMA-Rx-pad-COVERS-PROOF-A5.pdf`: the 4 cover pages for approval (not for press)
+- `IDMA-Rx-pad-COVERS-PRINT-bleed-cropmarks.pdf`: covers press file, 3 mm bleed, crop marks, TrimBox/BleedBox
+- `IDMA-Rx-pad-LEAF-A5.pdf`: the prescription leaf
 - `IDMA-Rx-pad-printer-job-ticket.pdf`: stock, binding, colours and open items for the printer
 - `prescription-pad.html`, `printer-job-ticket.html`: editable sources
-- `1-front-cover.png` ... `4-back-cover.png`: page previews
+- `1-front-cover.png` ... `5-prescription-leaf.png`: page previews
 
 ## Rebuilding
 
 ```
-node build/render.js <tmp-dir>          # previews, proof PDF, raw print PDF, layout checks
-python3 build/set-pdf-boxes.py <tmp-dir>/print-raw.pdf IDMA-Rx-pad-PRINT-bleed-cropmarks.pdf
+node build/render.js <tmp-dir>          # previews, proof PDFs, raw covers print PDF, layout checks
+python3 build/set-pdf-boxes.py <tmp-dir>/print-raw.pdf IDMA-Rx-pad-COVERS-PRINT-bleed-cropmarks.pdf
 node build/ticket.js                    # job ticket PDF
 ```
 
