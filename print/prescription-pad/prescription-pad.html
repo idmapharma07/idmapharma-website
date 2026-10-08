@@ -136,7 +136,7 @@
 
   /* ---------- 5. PRESCRIPTION LEAF (2 inks: PMS 186 U red + black) ---------- */
   .leaf { --text: #000; --grey: #4d4d4d; --line: #8c8c8c; --rule: #b3b3b3; }
-  .rx { position: absolute; left: 9mm; right: 9mm; top: 10mm; bottom: 14mm; display: flex; flex-direction: column; }   /* top 10 mm blank for padding gum */
+  .rx { position: absolute; left: 9mm; right: 9mm; top: 13mm; bottom: 14mm; display: flex; flex-direction: column; }   /* top 12 mm: stub under the head strip, perforation at 12 mm */
 
   .pt { display: grid; grid-template-columns: 1fr; }
   .pt.r1 { margin-top: 4mm; }
@@ -448,7 +448,7 @@
      PAGE 5 · PRESCRIPTION LEAF (separate file for the printer) (100 per pad)
      Two inks only: PMS 186 U red (rule, Rx, watermark screen, Mitthu footer) + black (everything else).
      Not personalised: the same leaf for every doctor; the doctor's stamp carries name and Regn. No.
-     Top 10 mm stays blank for the padding gum.
+     Top 12 mm stays blank: it is the stub under the head strip; leaves are perforated 12 mm from the head.
      ===================================================================== -->
 <section class="sheet leaf" aria-label="Prescription leaf">
 <div class="bleedbox"><div class="trim">

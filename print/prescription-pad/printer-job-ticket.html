@@ -10,7 +10,7 @@
   @page { size: A4; margin: 8mm 12mm; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #fff; }
-  body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); font-size: 7.4pt; line-height: 1.34; max-width: 182mm; margin: 0 auto; }
+  body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); font-size: 7.2pt; line-height: 1.32; max-width: 182mm; margin: 0 auto; }
   header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: .6mm solid var(--red); padding-bottom: 2.5mm; }
   h1 { font-size: 15pt; font-weight: 800; letter-spacing: -.01em; }
   header p { color: var(--grey); font-weight: 600; }
@@ -52,6 +52,7 @@
 <h2>Files</h2>
 <table>
   <tr><td><b>IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf</b></td><td>The 4 cover pages on 168 &times; 230 mm sheets: A5 trim, 3 mm bleed, crop marks, TrimBox and BleedBox set. Layout for imposition; convert or re-set before plating (item 4).</td></tr>
+  <tr><td><b>IDMA-Rx-pad-HEAD-STRIP-RGB-LAYOUT-bleed-cropmarks.pdf</b></td><td>Head strip, flat 148 &times; 33 mm + 3 mm bleed, crop and fold marks. Same RGB caveat as the covers.</td></tr>
   <tr><td><b>IDMA-Rx-pad-LEAF-A5.pdf</b></td><td>The prescription leaf (no bleed). Same for every doctor.</td></tr>
   <tr><td><b>IDMA-Rx-pad-COVERS-PROOF-A5.pdf</b></td><td>Covers at A5 trim size, for approval on screen or WhatsApp only. Not for press.</td></tr>
   <tr><td><b>prescription-pad.html</b></td><td>Editable source. Open in Chrome to view.</td></tr>
@@ -60,10 +61,10 @@
 <h2>Construction</h2>
 <table>
   <thead><tr><th style="width:30%">Part</th><th style="width:30%">Stock</th><th>Print and finish</th></tr></thead>
-  <tr><td><b>Front cover</b><br>page 1 outside, page 2 inside</td><td>300 GSM art card (C2S)</td><td>4/4 CMYK. Back page 2 <b>head-to-foot</b> (work-and-tumble), so it reads upright when the cover is flipped up over the glued head. Matt BOPP lamination on the outside. Crease 10 mm from the head; no type within 3 mm of the crease on either face.</td></tr>
+  <tr><td><b>Front cover</b><br>page 1 outside, page 2 inside</td><td>300 GSM art card (C2S)</td><td>4/4 CMYK. Back page 2 <b>head-to-foot</b> (work-and-tumble). Matt BOPP lamination outside. <b>Hinges at the head edge</b> (glued to the strip&rsquo;s spine or wrapped to the back) so it folds back behind the strip.</td></tr>
   <tr><td><b>Leaves</b><br>100 per pad</td><td>70 GSM maplitho (JK, Century or TNPL)</td><td><b>2/0: PMS 186 U + Black.</b> Red = rule, Rx, Mitthu footer, and the IDMA watermark as a <b>screen of the red</b> (12% / 6%); keep it under ~15% after dot gain. <b>Not personalised:</b> one leaf for every doctor (the doctor&rsquo;s stamp carries name and Regn. No.). No bleed.</td></tr>
   <tr><td><b>Back cover</b><br>page 3 inside, page 4 outside</td><td>Option A: 350 GSM art card printed both sides. Option B (stiffer): two 130&ndash;170 GSM printed sheets pasted on both faces of 1.2&ndash;1.5 mm greyboard</td><td>4/4 CMYK, back <b>head-to-head</b> (work-and-turn). Page 3 faces the leaves; page 4 faces out. Matt BOPP lamination on page 4.</td></tr>
-  <tr><td><b>Binding</b></td><td colspan="2">Padding gum at the head; top 10 mm of each leaf is blank for the gum. No perforation. Trim 3 sides to 148 &times; 210 mm after padding. If binding tape is added, tell IDMA first: pages 2, 3 and 4 then need 12 mm clear at the head.</td></tr>
+  <tr><td><b>Binding + head strip</b></td><td>Strip: 100&ndash;130 GSM art paper, 4C, matt BOPP (no UV), grain along 148 mm, pre-creased</td><td>Padding gum at the head; <b>leaves perforated 12 mm from the head</b>. Strip: front flap 10 mm on the leaves&rsquo; top margin, spine ~10&ndash;11 mm (match the block), back flap 12 mm on page 4. Hot-melt or PSA on laminated faces (PVA will not hold). Trim to 148 &times; 210 mm before the strip goes on.</td></tr>
 </table>
 
 <div class="two">

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IDMA Rx Pad Strip</title>
+<!--
+  HEAD STRIP (binding strip) for the IDMA A5 Rx pad. Printed separately, wrapped over the glued head.
+  Folded strip, upright panel sizes (trim):
+    FRONT flap 148 x 10 mm  - glued on the leaves' top margin, above the perforation at 12 mm. Stays above every prescription.
+    SPINE      148 x 11 mm  - the head edge (100 leaves x 70 GSM + covers ~ 10-11 mm; printer matches the real block).
+    BACK flap  148 x 12 mm  - glued on the head of the back cover (page 4). The front cover hinges at the head edge and folds back behind the strip.
+  Upright panel coordinates: FRONT and BACK flaps: top edge = fold to the spine, bottom edge = free outer edge.
+                             SPINE: top edge = fold to the front flap, bottom edge = fold to the back flap.
+  The flat print sheet (154 x 39 mm incl. 3 mm bleed) puts BACK (rotated 180) on top, SPINE (rotated 180) in the middle,
+  FRONT (upright) at the bottom; this file does that rotation for you.
+  Build: node build/strip.js <tmp-dir>  (previews, 3D mock-up, printer's PDF with crop and fold marks)
+-->
+<style>
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-var.woff2) format("woff2"); font-weight: 200 800; font-style: normal; }
+  @font-face { font-family: "Plus Jakarta Sans"; src: url(fonts/PlusJakartaSans-italic-var.woff2) format("woff2"); font-weight: 200 800; font-style: italic; }
+  :root {
+    --red: #c8102e; --red-dk: #a30d25; --red-tint: #fbe1e4; --orange: #f07c13; --peach: #ffd2a6;
+    --navy: #0c1f33; --iv: #a3121f; --text: #1a1a1a; --grey: #555;
+    --font: "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #e9edf1; }
+  body { font-family: var(--font); color: var(--text); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .panel { position: relative; width: 148mm; overflow: hidden; }
+  .panel.front { height: 10mm; } .panel.spine { height: 11mm; } .panel.back { height: 12mm; }
+  /* background helper: put full-bleed colour on .bg (extends 3 mm past left/right trim, and past the free outer edge of each flap) */
+  .bg { position: absolute; left: -3mm; right: -3mm; top: 0; bottom: 0; }
+  .front .bg, .back .bg { bottom: -3mm; }
+
+  /* 1. PREVIEW: the three panels upright, at trim */
+  #preview { padding: 6mm; display: grid; gap: 3.5mm; width: max-content; background: #e9edf1; }
+  #preview .lab { font-size: 7pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #555; margin-bottom: 1mm; }
+  #preview .panel { background: #fff; box-shadow: 0 0 0 .25mm rgb(0 0 0 / .15); }
+
+  /* 2. MOCK: what the doctor sees with the front cover flipped back: the front flap over the leaf's glued head */
+  #mock { position: relative; width: 148mm; height: 105mm; overflow: hidden; background: #fff url(5-prescription-leaf.png) top center / 148mm auto no-repeat; box-shadow: 0 2mm 6mm rgb(12 31 51 / .2); margin: 6mm; }
+  #mock .panel { position: absolute; left: 0; top: 0; }
+  #mock::before { content: ""; position: absolute; left: 0; right: 0; top: 12mm; border-top: .25mm dashed #bbb; }
+  #mock::after { content: ""; position: absolute; left: 0; right: 0; top: 10mm; height: 2.4mm; background: linear-gradient(rgb(0 0 0 / .12), rgb(0 0 0 / 0)); }
+
+  /* 3. FLAT: the print sheet, 154 x 39 mm (3 mm bleed all round) */
+  #flat { position: relative; width: 154mm; height: 39mm; overflow: hidden; background: #fff; margin: 6mm; }
+  #flat .slot { position: absolute; left: 3mm; width: 148mm; }
+  #flat .slot .panel { overflow: visible; }
+  #flat .slot.back  { top: 3mm;  height: 12mm; transform: rotate(180deg); }
+  #flat .slot.spine { top: 15mm; height: 11mm; transform: rotate(180deg); }
+  #flat .slot.front { top: 26mm; height: 10mm; }
+  #flat .slot.back .panel  { z-index: 1; }
+  .shot #flat .fold { position: absolute; left: 0; right: 0; border-top: .15mm dashed #0aa; }   /* fold guides: preview only */
+
+
+  /* 4. PRESS: 168 x 53 mm sheet = flat art (bleed box) at 7 mm, trim 148 x 33 mm at 10 mm, crop + fold marks in the slug */
+  #press { position: relative; width: 168mm; height: 53mm; background: #fff; display: none; }
+  #press #flat { position: absolute; left: 7mm; top: 7mm; margin: 0; }
+  #press .marks { position: absolute; inset: 0; width: 168mm; height: 53mm; }
+  #press .slug { position: absolute; left: 13mm; width: 141mm; top: 1.3mm; font-size: 5pt; line-height: 1.3; color: #000; }
+  #press .slug b { color: #c00; }
+  #press .plab { position: absolute; right: .8mm; width: 6mm; font-size: 4.5pt; font-weight: 700; color: #000; text-align: center; line-height: 1; }
+
+  /* 5. 3D MOCK-UP: the pad on a desk, front cover folded back at the 10 mm crease, the strip's front flap on the stub */
+  #pad3d { width: 250mm; height: 170mm; position: relative; overflow: hidden; background: linear-gradient(160deg, #f4f1ec, #ddd7ce); margin: 6mm; }
+  #pad3d .scene { position: absolute; inset: 0; perspective: 3200px; perspective-origin: 50% 0%; }
+  #pad3d .pad { position: absolute; left: 51mm; top: 14mm; width: 148mm; height: 210mm; transform-style: preserve-3d; transform-origin: 50% 40%; transform: rotateX(50deg) rotateZ(-22deg) scale3d(.5, .5, .5); }
+  #pad3d .pad > div { position: absolute; backface-visibility: hidden; }
+  #pad3d .face { left: 0; top: 0; width: 148mm; height: 210mm; background: #fff url(5-prescription-leaf.png) top center / 148mm auto no-repeat; overflow: hidden; }
+  #pad3d .face .panel { position: absolute; left: 0; top: 0; }
+  #pad3d .face::after { content: ""; position: absolute; left: 0; right: 0; top: 10mm; height: 2.4mm; background: linear-gradient(rgb(0 0 0 / .14), rgb(0 0 0 / 0)); }
+  #pad3d .side { left: 148mm; top: 0; width: 11mm; height: 210mm; transform-origin: left; transform: rotateY(90deg); background: repeating-linear-gradient(90deg, #fafafa 0 .35mm, #dedede .35mm .45mm); }
+  #pad3d .foot { left: 0; top: 210mm; width: 148mm; height: 11mm; transform-origin: top; transform: rotateX(-90deg); background: repeating-linear-gradient(180deg, #fafafa 0 .35mm, #dedede .35mm .45mm); }
+  #pad3d .pad > .cover { backface-visibility: visible; }
+  #pad3d .cover { left: 0; top: 0; width: 148mm; height: 210mm; transform-origin: top; transform: translateZ(.4mm) rotateX(104deg); overflow: hidden; box-shadow: 0 0 0 .3mm rgb(0 0 0 / .06); }
+  #pad3d .cover div { position: absolute; inset: 0; background: #fff url(2-inside-front-product-list.png) top center / 148mm 210mm no-repeat; transform: scaleY(-1); }
+  #pad3d .face::before { content: ""; position: absolute; left: 0; right: 0; top: 12mm; border-top: .25mm dashed #bbb; }   /* perforation */
+  #pad3d .shadow { position: absolute; left: 40mm; top: 50mm; width: 180mm; height: 120mm; background: radial-gradient(ellipse at 50% 50%, rgb(40 30 20 / .25), rgb(40 30 20 / 0) 64%); }
+
+  @page { size: 168mm 53mm; margin: 0; }
+  @media print {
+    html, body { background: #fff; }
+    #preview, #mock, #pad3d { display: none; }
+    #press { display: block; }
+    #flat .fold { display: none; }
+  }
+</style>
+
+<style id="variant">
+  
+  /* one navy base across all three panels (fold-tolerant); a peach band at each flap's free edge carries the compositions in dark ink */
+  .bg { background: var(--navy); }
+  .band { position: absolute; left: -3mm; right: -3mm; bottom: -3mm; background: linear-gradient(90deg, #ffe3c8, #ffd2a6); }
+  .front .band { top: 5.6mm; }
+  .back .band  { top: 4.9mm; }
+  .band::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: .5mm; background: var(--orange); }
+
+  .row { position: absolute; left: 5.4mm; right: 5.4mm; display: grid; grid-template-columns: 52fr 44fr 41fr; }
+  .row > div { position: relative; display: flex; align-items: center; gap: 1.4mm; min-width: 0; }
+  .row > div + div { padding-left: 2.2mm; }
+  .names > div + div::before { content: ""; position: absolute; left: 0; top: 50%; width: 1.1mm; height: 1.1mm; margin-top: -.55mm; border-radius: 50%; background: var(--orange); }
+
+  .brand { font-size: 11.5pt; font-weight: 800; color: #fff; letter-spacing: -.005em; line-height: 1; white-space: nowrap; }
+  .form { font-size: 6.5pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--peach); white-space: nowrap; line-height: 1; }
+  .ic { width: 4.2mm; height: 4.2mm; flex: none; display: block; }
+  .comp { font-size: 6pt; font-weight: 600; color: var(--navy); line-height: 1.12; white-space: nowrap; }
+  .comp.wrap { white-space: normal; }
+
+  .front .names { top: 1.3mm; height: 3.9mm; }
+  .front .comps { top: 6.25mm; height: 2.4mm; }
+  .front .comps > div { padding-left: 0; }
+  .front .comps > div:nth-child(1) { padding-left: 0; }
+
+  .spine .names { top: 0; bottom: 0; grid-template-columns: auto 1fr; align-items: center; }
+  .spine .logo { height: 6.2mm; width: auto; display: block; }
+  .spine .list { display: flex; justify-content: center; align-items: center; gap: 3.2mm; }
+  .spine .list b { font-size: 14pt; font-weight: 800; color: #fff; letter-spacing: -.005em; line-height: 1; }
+  .spine .list i { width: 1.4mm; height: 1.4mm; border-radius: 50%; background: var(--orange); display: block; }
+  .spine .list b.iv { color: var(--peach); }
+
+
+  .front .segs { position: absolute; left: 5.4mm; right: 5.4mm; top: 0; bottom: 0; display: grid; grid-template-columns: max-content 1fr max-content 1fr max-content; }
+  .front .dv { justify-self: center; width: .35mm; margin: 1.8mm 0 1.6mm; background: var(--orange); border-radius: .2mm; }
+  .front .seg { display: flex; flex-direction: column; align-items: flex-start; }
+  .front .nm { margin-top: 1.3mm; height: 3.9mm; display: flex; align-items: center; gap: 1.4mm; }
+  .front .seg .comp { margin-top: 1.05mm; }
+  .back .names { top: 1.25mm; height: 3.4mm; }
+  .back .brand { font-size: 9.5pt; }
+  .back .comps { top: 5.6mm; height: 5.1mm; align-items: start; }
+  .back .comps > div { align-items: flex-start; }
+
+</style>
+</head>
+<body>
+
+<template id="t-front"><div class="bg"></div><div class="band"></div>
+  <div class="segs">
+    <div class="seg"><div class="nm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#e3263a"/><rect x="9.4" y="4" width="5.2" height="2.6" rx=".6" fill="#fff"/><path d="M9 7.2h6v1.6l1.6 2v8.2a1.6 1.6 0 0 1-1.6 1.6H9a1.6 1.6 0 0 1-1.6-1.6V10.8L9 8.8z" fill="#fff"/><rect x="8.6" y="13" width="6.8" height="3.4" rx=".4" fill="#e3263a"/></svg><span class="brand">IMPROVIT</span></div><span class="comp">Iron + Cyanocobalamin + Pyridoxine + Folic Acid + Zinc</span></div>
+    <div class="dv"></div>
+    <div class="seg"><div class="nm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#1f9e8f"/><path d="M7.5 5.5h9l-2.2 10.5H9.7z" fill="#fff"/><rect x="9.6" y="16" width="4.8" height="3.4" rx=".7" fill="#fff"/><path d="M7.5 5.5h9" stroke="#1f9e8f" stroke-width=".9"/><path d="M9.6 9.4h4.8" stroke="#1f9e8f" stroke-width="1.1" stroke-linecap="round"/></svg><span class="brand">IMPROLAN-FC</span></div><span class="comp">Miconazole + Fluocinolone + Neomycin</span></div>
+    <div class="dv"></div>
+    <div class="seg"><div class="nm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#f07c13"/><g transform="rotate(-40 12 12)"><path d="M12 7.6H8.8a4.4 4.4 0 0 0 0 8.8H12z" fill="#fff"/><path d="M12 7.6h3.2a4.4 4.4 0 0 1 0 8.8H12z" fill="#ffd2a6"/></g></svg><span class="brand">RIDAM-ESR</span></div><span class="comp">Esomeprazole + Domperidone (SR)</span></div>
+  </div></template>
+<template id="t-spine"><div class="bg"></div><div class="row names">
+    <img class="logo" src="idma-logo.png" alt="IDMA Pharma">
+    <div class="list"><b class="iv">IMPROVIT</b><i></i><b>IMPROLAN-FC</b><i></i><b>RIDAM-ESR</b></div>
+  </div></template>
+<template id="t-back"><div class="bg"></div><div class="band"></div>
+  <div class="row names">
+    <div><span class="brand">IMPROVIT</span><span class="form">Syrup</span></div>
+    <div><span class="brand">IMPROLAN-FC</span><span class="form">Cream</span></div>
+    <div><span class="brand">RIDAM-ESR</span><span class="form">Capsules</span></div>
+  </div>
+  <div class="row comps">
+    <div><span class="comp wrap">Ferric Ammonium Citrate + Cyanocobalamin + Pyridoxine + Folic Acid + Zinc Sulphate</span></div>
+    <div><span class="comp wrap">Miconazole Nitrate + Fluocinolone Acetonide + Neomycin Sulphate</span></div>
+    <div><span class="comp wrap">Esomeprazole 40 mg + Domperidone 30 mg (SR)</span></div>
+  </div></template>
+
+<section id="preview">
+  <div><p class="lab">Front flap &middot; 148 &times; 10 mm &middot; above every prescription</p><div class="panel front" data-t="front"></div></div>
+  <div><p class="lab">Spine &middot; 148 &times; 11 mm &middot; the head edge</p><div class="panel spine" data-t="spine"></div></div>
+  <div><p class="lab">Back flap &middot; 148 &times; 12 mm &middot; on top of the back cover</p><div class="panel back" data-t="back"></div></div>
+</section>
+
+<section id="mock"><div class="panel front" data-t="front"></div></section>
+
+<section id="pad3d">
+  <div class="shadow"></div>
+  <div class="scene"><div class="pad">
+    <div class="side"></div>
+    <div class="foot"></div>
+    <div class="face"><div class="panel front" data-t="front"></div></div>
+    <div class="cover"><div></div></div>
+  </div></div>
+</section>
+
+<section id="press">
+  <section id="flat">
+  <div class="slot back"><div class="panel back" data-t="back"></div></div>
+  <div class="slot spine"><div class="panel spine" data-t="spine"></div></div>
+  <div class="slot front"><div class="panel front" data-t="front"></div></div>
+  <div class="fold" style="top:15mm"></div><div class="fold" style="top:26mm"></div>
+</section>
+  <svg class="marks" viewBox="0 0 168 53" aria-hidden="true"><g stroke="#000" stroke-width=".1"><line x1="0" y1="10" x2="7" y2="10"/><line x1="161" y1="10" x2="168" y2="10"/><line x1="0" y1="43" x2="7" y2="43"/><line x1="161" y1="43" x2="168" y2="43"/><line x1="10" y1="0" x2="10" y2="7"/><line x1="158" y1="0" x2="158" y2="7"/><line x1="10" y1="46" x2="10" y2="53"/><line x1="158" y1="46" x2="158" y2="53"/></g><g stroke="#000" stroke-width=".1" stroke-dasharray=".8 .5"><line x1="0" y1="22" x2="6" y2="22"/><line x1="162" y1="22" x2="168" y2="22"/><line x1="0" y1="33" x2="6" y2="33"/><line x1="162" y1="33" x2="168" y2="33"/></g></svg>
+  <p class="slug">IDMA Pharma Rx pad &middot; HEAD STRIP &middot; 4-colour &middot; trim 148 &times; 33 mm flat (back flap 12 / spine 11 / front flap 10) &middot; bleed 3 mm &middot; fold at the dashed marks<br>Front flap above the leaves&rsquo; 12 mm perforation &middot; cover hinges at the head &middot; match spine to the block &middot; <b>CHECK COMPOSITIONS AGAINST LABELS</b></p>
+  <p class="plab" style="top:14.4mm">BACK</p><p class="plab" style="top:26.6mm">SPINE</p><p class="plab" style="top:36.6mm">FRONT</p>
+</section>
+
+<script>
+  document.querySelectorAll('[data-t]').forEach(function (el) {
+    el.appendChild(document.getElementById('t-' + el.dataset.t).content.cloneNode(true));
+  });
+</script>
+</body>
+</html>
