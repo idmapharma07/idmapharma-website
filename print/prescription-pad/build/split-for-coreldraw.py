@@ -10,7 +10,7 @@ import pymupdf
 import sys
 
 here = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-if len(sys.argv) > 1 and sys.argv[1] == '4.5x7':   # 4.5 x 7 in pad (no head strip at this size yet)
+if len(sys.argv) > 1 and sys.argv[1] == '4.5x7':   # 4.5 x 7 in pad
     covers = '4.5x7/IDMA-Rx-pad-COVERS-RGB-LAYOUT-4.5x7-bleed-cropmarks.pdf'
     pages = [
         ('01-front-cover', covers, 0),
@@ -18,6 +18,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '4.5x7':   # 4.5 x 7 in pad (no head str
         ('03-inside-back-thank-you', covers, 2),
         ('04-back-cover-improvit', covers, 3),
         ('05-prescription-leaf', '4.5x7/IDMA-Rx-pad-LEAF-4.5x7.pdf', 0),
+        ('06-head-strip', '4.5x7/IDMA-Rx-pad-HEAD-STRIP-RGB-LAYOUT-4.5x7-bleed-cropmarks.pdf', 0),
     ]
     out = os.path.join(here, '4.5x7', 'coreldraw')
 else:

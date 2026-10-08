@@ -9,7 +9,8 @@ fonts/  Plus Jakarta Sans (the font of the design): install before opening
 02-inside-front-product-list   134.3 x 197.8 mm
 03-inside-back-thank-you       134.3 x 197.8 mm
 04-back-cover-improvit         134.3 x 197.8 mm
-05-prescription-leaf           114.3 x 177.8 mm  (4.5 x 7 in, no bleed; 2 inks)
+05-prescription-leaf           114.3 x 177.8 mm  (4.5 x 7 in, no bleed; 2 inks; leaves perforated 14 mm from the head)
+06-head-strip                  134.3 x  55 mm    (strip 114.3 x 35 mm flat + bleed, crop and fold marks: back flap 12 / spine 11 / front flap 12)
 
 HOW TO GET AN EDITABLE .CDR (do NOT use the JPG files: a JPG is only a photo and can never be edited)
  0. Install the fonts first: open the fonts folder, select all 6 .ttf files, right-click > "Install for all users".

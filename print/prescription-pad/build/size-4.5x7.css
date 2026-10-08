@@ -104,7 +104,7 @@
   html.s45 .iv-also .pcomp { font-size: 6.1pt; margin-top: .3mm; }
 
   /* 5. prescription leaf (2 inks) */
-  html.s45 .rx { left: 6.5mm; right: 6.5mm; top: 13mm; bottom: 12mm; }
+  html.s45 .rx { left: 6.5mm; right: 6.5mm; top: 15.5mm; bottom: 12mm; }   /* head strip front flap 12 mm; leaves perforated 14 mm from the head */
   html.s45 .field { font-size: 6.6pt; }
   html.s45 .field.big { font-size: 8pt; }
   html.s45 .field.big::after { height: 3.8mm; }
