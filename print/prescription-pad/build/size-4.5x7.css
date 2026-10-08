@@ -1,0 +1,119 @@
+  /* ===== 4.5 x 7 in (114.3 x 177.8 mm) layout: overrides the A5 layout; every text >= 6 pt ===== */
+  @page { size: 114.3mm 177.8mm; margin: 0; }
+  html.s45 .sheet, html.s45 .trim { width: 114.3mm; height: 177.8mm; }
+  html.s45.print .sheet { width: 134.3mm; height: 197.8mm; }
+  html.s45.print .bleedbox { width: 120.3mm; height: 183.8mm; }
+  html.s45 .slug { font-size: 4.6pt; top: .5mm; line-height: 1.15; }
+  html.s45 .rmp { font-size: 6pt; letter-spacing: 0; line-height: 1.3; }
+  html.s45 .qr { width: 16mm; height: 16mm; }
+
+  /* contact band (pages 1 and 4) */
+  html.s45 .contact-band { height: 27mm; padding: 0 6.5mm; gap: 3mm; }
+  html.s45.print .contact-band { height: 30mm; padding: 0 9.5mm 3mm; }
+  html.s45 .stripe { height: 1mm; }
+  html.s45 .row { font-size: 6.4pt; gap: 1.3mm; line-height: 1.45; }
+  html.s45 .row.addr { font-size: 6pt; }
+  html.s45 .row svg { width: 2.8mm; height: 2.8mm; }
+  html.s45 .scan { font-size: 6pt; margin-top: .9mm; }
+
+  /* 1. front cover */
+  html.s45 .cover-top { height: 104mm; }
+  html.s45.print .cover-top { height: 107mm; }
+  html.s45 .cover-curve { top: 79mm; width: 116.3mm; height: 26mm; }
+  html.s45.print .cover-curve { width: 120.3mm; }
+  html.s45 .cover-rmp { top: 6mm; left: 8mm; right: 8mm; width: auto; text-wrap: balance; }
+  html.s45 .cover-logo { top: 14.5mm; padding: 2mm 5.5mm; }
+  html.s45 .cover-logo img { width: 30mm; }
+  html.s45 .cover-head { top: 37.5mm; font-size: 20pt; }
+  html.s45 .cover-motto { top: 47mm; font-size: 9pt; }
+  html.s45 .cover-about { top: 53mm; left: 9mm; right: 9mm; font-size: 6.8pt; line-height: 1.4; }
+  html.s45 .acrostic { top: 64mm; left: 6.5mm; right: 6.5mm; gap: 1.8mm; }
+  html.s45 .acrostic div { padding: 1.7mm 1mm 1.5mm; border-radius: 1.8mm; }
+  html.s45 .acrostic b { font-size: 13pt; }
+  html.s45 .acrostic span { font-size: 6pt; margin-top: .7mm; }
+  html.s45 .cover-forms-head { top: 104.5mm; font-size: 6pt; letter-spacing: .22em; }
+  html.s45 .forms { top: 109.5mm; left: 5.6mm; right: 5.6mm; gap: 1mm; }
+  html.s45 .forms svg { width: 8.5mm; height: 8.5mm; margin-bottom: 1mm; }
+  html.s45 .forms span { font-size: 6pt; }
+  html.s45 .segments { top: 126mm; width: 104mm; gap: 1.1mm; }
+  html.s45 .segments span { font-size: 6pt; padding: .7mm 1.8mm; }
+  html.s45 .values { top: 142.5mm; font-size: 6pt; letter-spacing: .15em; }
+  html.s45 .values i { padding: 0 .8mm; }
+
+  /* 2. product list */
+  html.s45 .bar .r { width: 89.2mm; height: 2.2mm; }
+  html.s45 .bar .o { left: 89.2mm; height: 2.2mm; }
+  html.s45.print .bar .r { width: 92.2mm; height: 5.2mm; }
+  html.s45.print .bar .o { height: 5.2mm; }
+  html.s45 .plh { height: 21.5mm; padding: 5.2mm 6.5mm 0; }
+  html.s45 .plh::after { left: 6.5mm; right: 6.5mm; }
+  html.s45 .plh .eyebrow { font-size: 6pt; margin-top: 1.6mm; }
+  html.s45 .plh h2 { font-size: 12pt; margin-top: .2mm; }
+  html.s45 .plh img { right: 6.5mm; top: 9.5mm; width: 16mm; }
+  html.s45 .plist2 { left: 6.5mm; right: 6.5mm; top: 23.3mm; bottom: 9mm; column-gap: 4mm; }
+  html.s45 .gh { font-size: 6pt; padding: .75mm 1.3mm; margin: 1mm 0 .25mm; border-left-width: .8mm; letter-spacing: .1em; }
+  html.s45 .pc { padding: .6mm 0 .65mm; }
+  html.s45 .pn { font-size: 7.6pt; line-height: 1.15; }
+  html.s45 .pn span { font-size: 6pt; margin-left: .9mm; letter-spacing: 0; }
+  html.s45 .pcomp { font-size: 6.1pt; line-height: 1.22; margin-top: .2mm; }
+  html.s45 .pcomp.pwarn { font-size: 6pt; }
+  html.s45 .plfoot { left: 6.5mm; right: 6.5mm; bottom: 5.6mm; font-size: 6pt; line-height: 1.35; flex-wrap: wrap; column-gap: 3mm; row-gap: 0; }
+  html.s45 .plfoot.hinge { bottom: 9mm; right: 6.5mm; width: auto; flex-direction: row; justify-content: space-between; }
+
+  /* 3. inside back: thank-you, reorder, spotlight */
+  html.s45 .trim > p.rmp[style] { top: 5.5mm !important; left: 6.5mm !important; right: 6.5mm !important; }
+  html.s45 .ty { left: 6.5mm; right: 25mm; top: 11.2mm; }
+  html.s45 .ty h2 { font-size: 16.5pt; }
+  html.s45 .ty p { font-size: 6.8pt; margin-top: 1.1mm; }
+  html.s45 .ty-logo { top: 11.5mm; right: 6.5mm; width: 16mm; }
+  html.s45 .reorder { left: 6.5mm; right: 6.5mm; top: 29mm; padding: 2.5mm 2.8mm; grid-template-columns: 1fr 18mm; gap: 2.6mm; border-radius: 2mm; }
+  html.s45 .reorder .q { font-size: 8.4pt; }
+  html.s45 .reorder .s { font-size: 6.3pt; margin-top: .5mm; text-wrap: balance; }
+  html.s45 .reorder .kv { font-size: 6.1pt; row-gap: .6mm; column-gap: 2mm; margin-top: 1.4mm; }
+  html.s45 .reorder .kv .wl { min-height: 3mm; }
+  html.s45 .reorder .qrcap { font-size: 6pt; }
+  html.s45 .spot-h { left: 6.5mm; right: 6.5mm; top: 60mm; font-size: 6pt; padding-bottom: 1.1mm; }
+  html.s45 .spot { left: 6.5mm; right: 6.5mm; top: 65.5mm; gap: 2.4mm; }
+  html.s45 .spot .card { padding: 2.1mm 2.4mm; border-radius: 1.6mm; }
+  html.s45 .spot .card .pn { font-size: 8pt; }
+  html.s45 .spot .card .pcomp { font-size: 6.1pt; margin-top: .4mm; }
+
+  /* 4. outside back: IMPROVIT */
+  html.s45 .ivbg { height: 150.8mm; }
+  html.s45.print .ivbg { height: 153.8mm; }
+  html.s45 .iv-rmp { top: 13.4mm; left: 6.5mm; right: 6.5mm; }
+  html.s45 .iv-logo { top: 20.5mm; right: 6.5mm; width: 16mm; }
+  html.s45 .iv-eyebrow { top: 21.4mm; left: 6.5mm; font-size: 6pt; letter-spacing: .2em; }
+  html.s45 .iv-name { top: 24.6mm; left: 6mm; font-size: 30pt; }
+  html.s45 .iv-ing { top: 35.6mm; left: 6.5mm; right: 6.5mm; font-size: 6.1pt; }
+  html.s45 .iv-tag { top: 39mm; left: 6.5mm; font-size: 10.5pt; }
+  html.s45 .iv-glow { left: 6mm; top: 44mm; width: 102mm; height: 82mm; }
+  html.s45 .iv-hero { left: 21.15mm; top: 45mm; width: 72mm; }   /* 877 px wide: about 309 ppi at 72 mm */
+  html.s45 .iv-shadow { left: 43.2mm; top: 116mm; width: 28mm; height: 3.4mm; }
+  html.s45 .iv-pack { top: 96mm; }
+  html.s45 .iv-pack.l { left: 6.5mm; } html.s45 .iv-pack.r { right: 6.5mm; }
+  html.s45 .iv-pack b { font-size: 6pt; letter-spacing: .14em; }
+  html.s45 .iv-pack span { font-size: 7.6pt; padding: .9mm 2.8mm; }
+  html.s45 .iv-date { top: 121.5mm; left: 6.5mm; right: 6.5mm; font-size: 6pt; }
+  html.s45 .contact-band.iv { height: 27mm; }
+  html.s45 .iv-also { left: 6.5mm; right: 6.5mm; top: 126mm; gap: 1.5mm; }
+  html.s45 .iv-also > p { font-size: 6pt; letter-spacing: .14em; }
+  html.s45 .iv-also div { padding: 1.3mm 1.6mm; border-radius: 1.3mm; }
+  html.s45 .iv-also .pn { font-size: 7pt; }
+  html.s45 .iv-also .pn span { font-size: 6pt; }
+  html.s45 .iv-also .pcomp { font-size: 6.1pt; margin-top: .3mm; }
+
+  /* 5. prescription leaf (2 inks) */
+  html.s45 .rx { left: 6.5mm; right: 6.5mm; top: 13mm; bottom: 12mm; }
+  html.s45 .field { font-size: 6.6pt; }
+  html.s45 .field.big { font-size: 8pt; }
+  html.s45 .field.big::after { height: 3.8mm; }
+  html.s45 .pt.r1 { margin-top: 2.6mm; }
+  html.s45 .pt.r2 { margin-top: 4.2mm; }
+  html.s45 .writing { margin-top: 4mm; border-top-width: .5mm; }
+  html.s45 .rxsym { width: 11mm; height: 11mm; top: 2.6mm; }
+  html.s45 .wm { width: 84mm; }
+  html.s45 .stamp { width: 46mm; height: 20mm; font-size: 6.2pt; }
+  html.s45 .rx-foot { left: 6.5mm; right: 6.5mm; bottom: 5.6mm; padding-top: 1.5mm; border-top-width: .4mm; }
+  html.s45 .rx-foot .mitthu { font-size: 8.6pt; }
+  html.s45 .rx-foot .by { font-size: 6pt; }

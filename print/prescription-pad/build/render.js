@@ -1,15 +1,19 @@
 // Renders prescription-pad.html: page previews (PNG), proof PDFs (covers + leaf),
 // the raw printer's PDF for the covers, and layout checks.
-// usage: node build/render.js <tmp-dir>
+// usage: node build/render.js <tmp-dir> [4.5x7]   (no size = A5)
 //   then: python3 build/set-pdf-boxes.py <tmp-dir>/print-raw.pdf IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf
 const { chromium } = require('playwright');
 const path = require('path');
 const os = require('os');
 (async () => {
   const dir = path.join(__dirname, '..'), scratch = process.argv[2] || os.tmpdir();
+  const SIZES = { A5: { src: 'prescription-pad.html', w: 148, h: 210, out: dir, tag: 'A5' },
+                  '4.5x7': { src: 'prescription-pad-4.5x7.html', w: 114.3, h: 177.8, out: path.join(dir, '4.5x7'), tag: '4.5x7' } };
+  const V = SIZES[process.argv[3] || 'A5'];
+  require('fs').mkdirSync(V.out, { recursive: true });
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 700, height: 1000 }, deviceScaleFactor: 3 });
-  await page.goto('file://' + path.join(dir, 'prescription-pad.html'));
+  await page.goto('file://' + path.join(dir, V.src));
   await page.evaluate(() => document.fonts.ready);
   const report = await page.evaluate(() => {
     const mm = px => (px / 3.7795).toFixed(1);
@@ -50,12 +54,13 @@ const os = require('os');
   await page.addStyleTag({ content: 'html, body { background: #fff !important; } .sheet { box-shadow: none !important; }' });
   const names = ['1-front-cover', '2-inside-front-product-list', '3-inside-back-thank-you', '4-back-cover-improvit', '5-prescription-leaf'];
   const sheets = await page.$$('.sheet');
-  for (let i = 0; i < sheets.length; i++) await sheets[i].screenshot({ path: path.join(dir, `${names[i]}.png`) });
+  for (let i = 0; i < sheets.length; i++) await sheets[i].screenshot({ path: path.join(V.out, `${names[i]}.png`) });
   await page.emulateMedia({ media: 'print' });
-  await page.pdf({ path: path.join(dir, 'IDMA-Rx-pad-COVERS-PROOF-A5.pdf'), width: '148mm', height: '210mm', printBackground: true, preferCSSPageSize: true, pageRanges: '1-4' });
-  await page.pdf({ path: path.join(dir, 'IDMA-Rx-pad-LEAF-A5.pdf'), width: '148mm', height: '210mm', printBackground: true, preferCSSPageSize: true, pageRanges: '5' });
+  await page.pdf({ path: path.join(V.out, `IDMA-Rx-pad-COVERS-PROOF-${V.tag}.pdf`), width: V.w + 'mm', height: V.h + 'mm', printBackground: true, preferCSSPageSize: true, pageRanges: '1-4' });
+  await page.pdf({ path: path.join(V.out, `IDMA-Rx-pad-LEAF-${V.tag}.pdf`), width: V.w + 'mm', height: V.h + 'mm', printBackground: true, preferCSSPageSize: true, pageRanges: '5' });
   await page.evaluate(() => window.printMode());
-  await page.pdf({ path: path.join(scratch, 'print-raw.pdf'), width: '168mm', height: '230mm', printBackground: true, preferCSSPageSize: true, pageRanges: '1-4' });
-  console.log('raw print PDF: ' + path.join(scratch, 'print-raw.pdf'));
+  const raw = path.join(scratch, V.tag === 'A5' ? 'print-raw.pdf' : `print-raw-${V.tag}.pdf`);
+  await page.pdf({ path: raw, width: (V.w + 20) + 'mm', height: (V.h + 20) + 'mm', printBackground: true, preferCSSPageSize: true, pageRanges: '1-4' });
+  console.log('raw print PDF: ' + raw);
   await browser.close();
 })();

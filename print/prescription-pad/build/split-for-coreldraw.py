@@ -1,23 +1,36 @@
 """Split the vector print files into one file per page for CorelDRAW (needs: pip install pymupdf).
 
-usage: python3 build/split-for-coreldraw.py
-Writes coreldraw/pdf/NN-name.pdf (vector, single page) and coreldraw/svg/NN-name.svg (text as curves).
+usage: python3 build/split-for-coreldraw.py [4.5x7]
+Writes coreldraw/ (or 4.5x7/coreldraw/) pdf/NN-name.pdf (vector, single page) and coreldraw/svg/NN-name.svg (text as curves).
 CorelDRAW: File > Open the PDF (or File > Import the SVG), then File > Save As > CorelDRAW (*.cdr).
 """
 import os
 import pymupdf
 
+import sys
+
 here = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-covers = 'IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf'
-pages = [  # same order as the client's combined PDF
-    ('01-front-cover', covers, 0),
-    ('02-inside-front-product-list', covers, 1),
-    ('03-prescription-leaf', 'IDMA-Rx-pad-LEAF-A5.pdf', 0),
-    ('04-head-strip', 'IDMA-Rx-pad-HEAD-STRIP-RGB-LAYOUT-bleed-cropmarks.pdf', 0),
-    ('05-inside-back-thank-you', covers, 2),
-    ('06-back-cover-improvit', covers, 3),
-]
-out = os.path.join(here, 'coreldraw')
+if len(sys.argv) > 1 and sys.argv[1] == '4.5x7':   # 4.5 x 7 in pad (no head strip at this size yet)
+    covers = '4.5x7/IDMA-Rx-pad-COVERS-RGB-LAYOUT-4.5x7-bleed-cropmarks.pdf'
+    pages = [
+        ('01-front-cover', covers, 0),
+        ('02-inside-front-product-list', covers, 1),
+        ('03-inside-back-thank-you', covers, 2),
+        ('04-back-cover-improvit', covers, 3),
+        ('05-prescription-leaf', '4.5x7/IDMA-Rx-pad-LEAF-4.5x7.pdf', 0),
+    ]
+    out = os.path.join(here, '4.5x7', 'coreldraw')
+else:
+    covers = 'IDMA-Rx-pad-COVERS-RGB-LAYOUT-bleed-cropmarks.pdf'
+    pages = [  # same order as the client's combined PDF
+        ('01-front-cover', covers, 0),
+        ('02-inside-front-product-list', covers, 1),
+        ('03-prescription-leaf', 'IDMA-Rx-pad-LEAF-A5.pdf', 0),
+        ('04-head-strip', 'IDMA-Rx-pad-HEAD-STRIP-RGB-LAYOUT-bleed-cropmarks.pdf', 0),
+        ('05-inside-back-thank-you', covers, 2),
+        ('06-back-cover-improvit', covers, 3),
+    ]
+    out = os.path.join(here, 'coreldraw')
 for sub in ('pdf', 'svg'):
     os.makedirs(os.path.join(out, sub), exist_ok=True)
 for name, src, i in pages:

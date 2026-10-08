@@ -28,6 +28,19 @@ indications or ingredient claims) until the IMPROVIT label gives dosage, contrai
 - `prescription-pad.html`, `printer-job-ticket.html`: editable sources; `improvit-bottle.png`: IMPROVIT creative (supplied by IDMA)
 - `1-front-cover.png` ... `5-prescription-leaf.png`: page previews
 
+## 4.5 x 7 in version
+
+`4.5x7/` holds the same pad laid out at 4.5 x 7 in (114.3 x 177.8 mm): previews, proof PDFs, the covers print file and
+`4.5x7/coreldraw/` (one PDF + SVG per page). Content comes from `prescription-pad.html`; only the layout differs
+(`build/size-4.5x7.css`). `prescription-pad-4.5x7.html` is generated: do not edit it.
+
+```
+python3 build/make-variant.py 4.5x7
+node build/render.js <tmp-dir> 4.5x7
+python3 build/set-pdf-boxes.py <tmp-dir>/print-raw-4.5x7.pdf 4.5x7/IDMA-Rx-pad-COVERS-RGB-LAYOUT-4.5x7-bleed-cropmarks.pdf "IDMA Pharma Rx pad 4.5 x 7 in" 114.3x177.8
+python3 build/split-for-coreldraw.py 4.5x7
+```
+
 ## Rebuilding
 
 ```
